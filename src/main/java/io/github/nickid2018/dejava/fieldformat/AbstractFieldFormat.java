@@ -1,6 +1,6 @@
 package io.github.nickid2018.dejava.fieldformat;
 
-import io.github.nickid2018.dejava.Checkers;
+import io.github.nickid2018.dejava.util.Checkers;
 import io.github.nickid2018.dejava.DecompileException;
 import io.github.nickid2018.dejava.WarnList;
 import io.github.nickid2018.dejava.classformat.AbstractClassFormat;
@@ -28,7 +28,7 @@ public abstract class AbstractFieldFormat {
                 "Invalid field name: %s has illegal characters", name);
         if (!BEST_NAMING.matcher(name).matches())
             WarnList.warn("%s isn't a good field name: have non-ASCII character");
-        classFormat.getImports().addImport(descriptor);
+        classFormat.getImports().addImport(descriptor, classFormat.getFileProvider());
         fieldType = descriptor;
         if ((accessFlag & Opcodes.ACC_STATIC) != 0 && initialValue != null) {
             // Static field should have an initial value (maybe null, but we ignore it)

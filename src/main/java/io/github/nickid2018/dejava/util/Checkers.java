@@ -1,4 +1,6 @@
-package io.github.nickid2018.dejava;
+package io.github.nickid2018.dejava.util;
+
+import io.github.nickid2018.dejava.DecompileException;
 
 public class Checkers {
 

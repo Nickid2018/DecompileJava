@@ -1,6 +1,6 @@
 package io.github.nickid2018.dejava;
 
-public class DecompileException extends Exception{
+public class DecompileException extends RuntimeException {
 
     public DecompileException(String info) {
         super(info);

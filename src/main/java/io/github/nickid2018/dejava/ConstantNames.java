@@ -82,4 +82,32 @@ public class ConstantNames {
     // Patterns
     public static final Pattern VALID_NAME = Pattern.compile("^[/\\\\()<>]+");
     public static final Pattern BEST_NAMING = Pattern.compile("[a-zA-Z$0-9]+");
+    // Bootstrap Methods
+    public static final String LAMBDA_BOOTSTRAP_CLASS = "java/lang/invoke/LambdaMetafactory"; // In Java 8
+    public static final String LAMBDA_BOOTSTRAP_S_NAME = "metafactory";
+    public static final String LAMBDA_BOOTSTRAP_S_DESC = "(Ljava/lang/invoke/MethodHandles$Lookup;" +
+            "Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;" +
+            "Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;";
+    public static final String LAMBDA_BOOTSTRAP_A_NAME = "altMetafactory";
+    public static final String LAMBDA_BOOTSTRAP_A_DESC = "(Ljava/lang/invoke/MethodHandles$Lookup;" +
+            "Ljava/lang/String;Ljava/lang/invoke/MethodType;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;";
+    public static final String STRING_BOOTSTRAP_CLASS = "java/lang/invoke/StringConcatFactory"; // In Java 9
+    public static final String STRING_BOOTSTRAP_S_NAME = "makeConcatWithConstants";
+    public static final String STRING_BOOTSTRAP_S_DESC = "(Ljava/lang/invoke/MethodHandles$Lookup;" +
+            "Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;";
+    public static final String STRING_BOOTSTRAP_A_NAME = "makeConcat";
+    public static final String STRING_BOOTSTRAP_A_DESC = "(Ljava/lang/invoke/MethodHandles$Lookup;" +
+            "Ljava/lang/String;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;";
+    public static final String SWITCH_BOOTSTRAP_CLASS = "java/lang/runtime/SwitchBootstraps";
+    public static final String SWITCH_BOOTSTRAP_TYPE_NAME = "typeSwitch"; // In Java 17 Preview
+    public static final String SWITCH_BOOTSTRAP_TYPE_DESC = "(Ljava/lang/invoke/MethodHandles$Lookup;" +
+            "Ljava/lang/String;Ljava/lang/invoke/MethodType;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;";
+    public static final String SWITCH_BOOTSTRAP_ENUM_NAME = "enumSwitch"; // Unused in Java 17
+    public static final String SWITCH_BOOTSTRAP_ENUM_DESC = "(Ljava/lang/invoke/MethodHandles$Lookup;" +
+            "Ljava/lang/String;Ljava/lang/invoke/MethodType;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;";
+    public static final String OBJECT_BOOTSTRAP_CLASS = "java/lang/runtime/ObjectMethods"; // Combine with record (14)
+    public static final String OBJECT_BOOTSTRAP_NAME = "bootstrap";
+    public static final String OBJECT_BOOTSTRAP_DESC = "(Ljava/lang/invoke/MethodHandles$Lookup;" +
+            "Ljava/lang/String;Ljava/lang/invoke/TypeDescriptor;Ljava/lang/Class;" +
+            "Ljava/lang/String;[Ljava/lang/invoke/MethodHandle;)Ljava/lang/invoke/CallSite;";
 }
