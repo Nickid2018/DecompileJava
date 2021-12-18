@@ -61,10 +61,6 @@ public abstract class AbstractFieldFormat {
         }
     }
 
-    public void setSynthetic(boolean synthetic) {
-        isSynthetic = synthetic;
-    }
-
     public String getName() {
         return name;
     }
@@ -87,5 +83,9 @@ public abstract class AbstractFieldFormat {
 
     public boolean isSynthetic() {
         return isSynthetic;
+    }
+
+    public void setSynthetic(boolean synthetic) {
+        isSynthetic = synthetic;
     }
 }

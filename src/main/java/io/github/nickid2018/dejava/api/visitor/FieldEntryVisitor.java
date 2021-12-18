@@ -26,6 +26,7 @@ public interface FieldEntryVisitor {
 
     /**
      * Visit when the field has annotations.
+     *
      * @param name the class name of the annotation
      * @return a annotation visitor
      */
@@ -33,6 +34,7 @@ public interface FieldEntryVisitor {
 
     /**
      * Visit when the field have templates.
+     *
      * @return a signature information visitor
      */
     SignatureVisitor visitSignature();
@@ -44,12 +46,14 @@ public interface FieldEntryVisitor {
 
     /**
      * Visit when the field have an initial value with a constant.
+     *
      * @param initialValue the initial value of the field
      */
     void visitInitialValue(String initialValue);
 
     /**
      * Visit when the field is assigned with a statement(including lambda).
+     *
      * @return a statement visitor
      */
     StatementEntryVisitor visitInitialWithStatement();

@@ -22,6 +22,10 @@ import java.io.InputStream;
 
 public interface ClassFileProvider {
 
+    static InputStream warpBytes(byte[] bytes) {
+        return new ByteArrayInputStream(bytes);
+    }
+
     boolean isInnerClass(String name);
 
     boolean isInPackage(String packageName, String binaryName);
@@ -29,8 +33,4 @@ public interface ClassFileProvider {
     String resolveBinaryName(String internalName);
 
     InputStream getClassFile(String internalName) throws IOException;
-
-    static InputStream warpBytes(byte[] bytes) {
-        return new ByteArrayInputStream(bytes);
-    }
 }

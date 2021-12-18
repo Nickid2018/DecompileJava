@@ -29,9 +29,9 @@ import org.objectweb.asm.*;
 
 public class ClassASTParser extends ClassVisitor implements Opcodes {
 
-    private AbstractClassFormat classFormat;
     private final String fileName;
     private final ClassFileProvider fileProvider;
+    private AbstractClassFormat classFormat;
     private boolean isSynthetic;
 
     public ClassASTParser(int api, String fileName, ClassFileProvider provider) {

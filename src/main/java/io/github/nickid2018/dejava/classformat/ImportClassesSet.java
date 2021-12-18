@@ -20,13 +20,13 @@ import io.github.nickid2018.dejava.api.ClassFileProvider;
 import io.github.nickid2018.dejava.api.visitor.ImportEntryVisitor;
 import io.github.nickid2018.dejava.util.ClassNameUtils;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class ImportClassesSet {
 
     private final String nowPackage;
-    private final Set<String> names = new HashSet<>();
+    private final Set<String> names = new TreeSet<>();
 
     public ImportClassesSet(String nowPackage) {
         this.nowPackage = nowPackage;
@@ -34,6 +34,7 @@ public class ImportClassesSet {
 
     /**
      * Add a class into imports
+     *
      * @param name the internal name of the class
      */
     public void addImport(String name, ClassFileProvider provider) {
@@ -47,9 +48,9 @@ public class ImportClassesSet {
             // Inner Class?
             innerClass = provider.isInnerClass(name);
         name = provider.resolveBinaryName(name);
-        if(name.startsWith("java.lang") && !innerClass)
+        if (name.startsWith("java.lang") && !innerClass)
             return;
-        if(provider.isInPackage(nowPackage, name) && !innerClass)
+        if (provider.isInPackage(nowPackage, name) && !innerClass)
             return;
         names.add(name);
     }

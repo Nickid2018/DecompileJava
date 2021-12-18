@@ -31,13 +31,13 @@ public enum FieldType {
         this.versionStart = versionStart;
     }
 
-    public int getVersionStart() {
-        return versionStart;
-    }
-
     public static FieldType getTypeWithAccessFlag(int accessFlag) {
         if ((accessFlag & Opcodes.ACC_SYNTHETIC) != 0)
             return SYNTHETIC;
         return (accessFlag & Opcodes.ACC_ENUM) != 0 ? ENUM : PLAIN;
+    }
+
+    public int getVersionStart() {
+        return versionStart;
     }
 }

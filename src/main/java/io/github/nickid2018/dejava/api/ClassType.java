@@ -33,10 +33,6 @@ public enum ClassType {
         this.versionStart = versionStart;
     }
 
-    public int getVersionStart() {
-        return versionStart;
-    }
-
     public static ClassType getTypeWithAccessFlag(int accessFlag) {
         if ((accessFlag & Opcodes.ACC_SYNTHETIC) != 0)
             return SYNTHETIC;
@@ -49,5 +45,9 @@ public enum ClassType {
         if ((accessFlag & Opcodes.ACC_RECORD) != 0)
             return RECORD;
         return CLASS;
+    }
+
+    public int getVersionStart() {
+        return versionStart;
     }
 }

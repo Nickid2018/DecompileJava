@@ -23,15 +23,15 @@ import java.util.Map;
 
 public class WarnList {
 
-    private static boolean enabled = false;
     private static final Map<String, List<String>> warns = new HashMap<>();
+    private static boolean enabled = false;
 
     public static void setEnabled(boolean enabled) {
         WarnList.enabled = enabled;
     }
 
     public static void warn(String className, String warn, Object... args) {
-        if(enabled)
+        if (enabled)
             warns.computeIfAbsent(className, str -> new ArrayList<>()).add(warn.formatted(args));
     }
 
