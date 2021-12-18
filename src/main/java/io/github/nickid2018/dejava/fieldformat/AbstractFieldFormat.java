@@ -1,9 +1,25 @@
+/*
+ * Copyright 2021 Nickid2018
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.nickid2018.dejava.fieldformat;
 
-import io.github.nickid2018.dejava.util.Checkers;
 import io.github.nickid2018.dejava.DecompileException;
 import io.github.nickid2018.dejava.WarnList;
 import io.github.nickid2018.dejava.classformat.AbstractClassFormat;
+import io.github.nickid2018.dejava.util.Checkers;
 import org.objectweb.asm.Opcodes;
 
 import static io.github.nickid2018.dejava.ConstantNames.*;
@@ -15,6 +31,7 @@ public abstract class AbstractFieldFormat {
     private final String fieldType;
     private final int accessFlag;
     private String initialValue;
+    private boolean isSynthetic;
 
     public AbstractFieldFormat(AbstractClassFormat classFormat, String name, String descriptor,
                                int accessFlag, Object initialValue)
@@ -27,7 +44,7 @@ public abstract class AbstractFieldFormat {
         Checkers.checkIfFalse(VALID_NAME.matcher(name).matches(),
                 "Invalid field name: %s has illegal characters", name);
         if (!BEST_NAMING.matcher(name).matches())
-            WarnList.warn("%s isn't a good field name: have non-ASCII character");
+            WarnList.warn(classFormat.getClassName(), "%s isn't a good field name: have non-ASCII character", name);
         classFormat.getImports().addImport(descriptor, classFormat.getFileProvider());
         fieldType = descriptor;
         if ((accessFlag & Opcodes.ACC_STATIC) != 0 && initialValue != null) {
@@ -39,9 +56,13 @@ public abstract class AbstractFieldFormat {
                 case Long l -> l + "l";
                 case Double d -> d + "";
                 case String s -> "\"" + s + "\"";
-                default -> "";
+                default -> throw new DecompileException("Impossible error");
             };
         }
+    }
+
+    public void setSynthetic(boolean synthetic) {
+        isSynthetic = synthetic;
     }
 
     public String getName() {
@@ -62,5 +83,9 @@ public abstract class AbstractFieldFormat {
 
     public String getInitialValue() {
         return initialValue;
+    }
+
+    public boolean isSynthetic() {
+        return isSynthetic;
     }
 }

@@ -1,108 +1,27 @@
+/*
+ * Copyright 2021 Nickid2018
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.nickid2018.dejava.classformat;
 
-import io.github.nickid2018.dejava.api.visitor.SignatureEntryVisitor;
 import org.objectweb.asm.signature.SignatureReader;
 import org.objectweb.asm.signature.SignatureVisitor;
 
-import static org.objectweb.asm.Opcodes.ASM9;
-
 public record SignatureInfos(String signature) {
 
-    public static final int ACCURATE_CLASS = 0;
-    public static final int EXTEND_CLASS = 1;
-    public static final int SUPER_CLASS = 2;
-
-    public void fireVisit(SignatureEntryVisitor visitor) {
-        new SignatureReader(signature).accept(new Visitor(visitor));
-    }
-
-    private static class Visitor extends SignatureVisitor {
-
-        private final SignatureEntryVisitor visitor;
-
-        Visitor(SignatureEntryVisitor visitor){
-            super(ASM9);
-            this.visitor = visitor;
-        }
-
-        @Override
-        public void visitFormalTypeParameter(String name) {
-            super.visitFormalTypeParameter(name);
-        }
-
-        @Override
-        public SignatureVisitor visitClassBound() {
-            return super.visitClassBound();
-        }
-
-        @Override
-        public SignatureVisitor visitInterfaceBound() {
-            return super.visitInterfaceBound();
-        }
-
-        @Override
-        public SignatureVisitor visitSuperclass() {
-            return super.visitSuperclass();
-        }
-
-        @Override
-        public SignatureVisitor visitInterface() {
-            return super.visitInterface();
-        }
-
-        @Override
-        public SignatureVisitor visitParameterType() {
-            return super.visitParameterType();
-        }
-
-        @Override
-        public SignatureVisitor visitReturnType() {
-            return super.visitReturnType();
-        }
-
-        @Override
-        public SignatureVisitor visitExceptionType() {
-            return super.visitExceptionType();
-        }
-
-        @Override
-        public void visitBaseType(char descriptor) {
-            super.visitBaseType(descriptor);
-        }
-
-        @Override
-        public void visitTypeVariable(String name) {
-            super.visitTypeVariable(name);
-        }
-
-        @Override
-        public SignatureVisitor visitArrayType() {
-            return super.visitArrayType();
-        }
-
-        @Override
-        public void visitClassType(String name) {
-            super.visitClassType(name);
-        }
-
-        @Override
-        public void visitInnerClassType(String name) {
-            super.visitInnerClassType(name);
-        }
-
-        @Override
-        public void visitTypeArgument() {
-            super.visitTypeArgument();
-        }
-
-        @Override
-        public SignatureVisitor visitTypeArgument(char wildcard) {
-            return super.visitTypeArgument(wildcard);
-        }
-
-        @Override
-        public void visitEnd() {
-            super.visitEnd();
-        }
+    public void fireVisit(SignatureVisitor visitor) {
+        new SignatureReader(signature).accept(visitor);
     }
 }

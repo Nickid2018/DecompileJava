@@ -14,8 +14,27 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.methodformat;
+package io.github.nickid2018.dejava.syntax;
 
-public abstract class AbstractMethodFormat {
+import io.github.nickid2018.dejava.api.visitor.ImportEntryVisitor;
+import io.github.nickid2018.dejava.util.MarkWriter;
 
+public class ImportSyntax implements ImportEntryVisitor {
+
+    private final MarkWriter writer;
+
+    public ImportSyntax(MarkWriter writer) {
+        this.writer = writer;
+        writer.jump("import");
+    }
+
+    @Override
+    public void visitImportEntry(String className) {
+        writer.newLine("import %s;", className);
+    }
+
+    @Override
+    public void visitEnd() {
+        writer.resume();
+    }
 }

@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.methodformat;
+package io.github.nickid2018.dejava.util;
 
-public abstract class AbstractMethodFormat {
-
+public record LinePair(int indent, String lineStr) {
 }

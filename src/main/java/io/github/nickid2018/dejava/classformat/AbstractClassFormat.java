@@ -1,12 +1,28 @@
+/*
+ * Copyright 2021 Nickid2018
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.nickid2018.dejava.classformat;
 
+import io.github.nickid2018.dejava.DecompileException;
+import io.github.nickid2018.dejava.WarnList;
 import io.github.nickid2018.dejava.api.ClassFileProvider;
 import io.github.nickid2018.dejava.api.visitor.ClassEntryVisitor;
 import io.github.nickid2018.dejava.fieldformat.AbstractFieldFormat;
 import io.github.nickid2018.dejava.methodformat.AbstractMethodFormat;
 import io.github.nickid2018.dejava.util.Checkers;
-import io.github.nickid2018.dejava.DecompileException;
-import io.github.nickid2018.dejava.WarnList;
 
 import java.util.*;
 
@@ -60,7 +76,7 @@ public abstract class AbstractClassFormat {
         Checkers.checkIfFalse(VALID_NAME.matcher(className).matches(),
                 "Invalid class name: %s has illegal characters", className);
         if (!BEST_NAMING.matcher(className).matches())
-            WarnList.warn("%s isn't a good class name: have non-ASCII character");
+            WarnList.warn(className, "%s isn't a good class name: have non-ASCII character", className);
         imports = new ImportClassesSet(packageName);
         imports.addImport(superClass, provider);
         for (String clazz : interfaces)
@@ -89,6 +105,10 @@ public abstract class AbstractClassFormat {
 
     public void setSignature(SignatureInfos signature) {
         this.signature = signature;
+    }
+
+    public void addField(String name, AbstractFieldFormat format) {
+        fieldFormats.put(name, format);
     }
 
     public void fireVisit(ClassEntryVisitor visitor) {
