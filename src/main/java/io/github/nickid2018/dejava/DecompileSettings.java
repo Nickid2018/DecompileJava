@@ -18,5 +18,7 @@ package io.github.nickid2018.dejava;
 
 public class DecompileSettings {
 
+    public static boolean noSynthetic = true;
+
     public static int indentSpace = 4;
 }

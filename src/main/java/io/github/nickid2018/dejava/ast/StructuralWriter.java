@@ -7,13 +7,13 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class StructuralWriter {
-    private ArrayList<StringBuilder> arr = new ArrayList<>();
+    private final ArrayList<StringBuilder> arr = new ArrayList<>();
     private int indent = 0;
-    private int indentSpaces = 4;
+    private final int indentSpaces = 4;
 
     private int line = 0;
 
-    private FormatControl format;
+    private final FormatControl format;
 
     public StructuralWriter(FormatControl fc) {
         this(fc, 0);
@@ -35,7 +35,7 @@ public class StructuralWriter {
 
     public StructuralWriter tokenSep(String sep, String... s) {
         StringBuilder sb = arr.get(line);
-        if(!sb.isEmpty() && sb.charAt(sb.length() - 1) != ' ') {
+        if (!sb.isEmpty() && sb.charAt(sb.length() - 1) != ' ') {
             sb.append(" ");
         }
         sb.append(String.join(sep, s));
@@ -63,7 +63,7 @@ public class StructuralWriter {
         return this;
     }
 
-    public StructuralWriter statement(String ...s) {
+    public StructuralWriter statement(String... s) {
         return line().token(s).append(";");
     }
 

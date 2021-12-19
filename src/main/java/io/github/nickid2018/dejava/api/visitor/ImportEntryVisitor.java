@@ -18,11 +18,20 @@ package io.github.nickid2018.dejava.api.visitor;
 
 /**
  * Visitor for import statements. The order is:
- * <code>(visitImportEntry)</code>
+ * <code>(visitImportEntry)*visitEnd</code>
  */
-public interface ImportEntryVisitor {
+public abstract class ImportEntryVisitor {
 
-    void visitImportEntry(String className);
+    /**
+     * Visit an import entry, using binary names.
+     * @param className binary name of the class
+     */
+    public void visitImportEntry(String className) {
+    }
 
-    void visitEnd();
+    /**
+     * Visit when the visit over.
+     */
+    public void visitEnd() {
+    }
 }

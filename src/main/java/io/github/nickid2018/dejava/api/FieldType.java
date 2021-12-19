@@ -18,11 +18,26 @@ package io.github.nickid2018.dejava.api;
 
 import org.objectweb.asm.Opcodes;
 
+/**
+ * Types of the field.
+ */
 public enum FieldType {
 
+    /**
+     * A plain type
+     */
     PLAIN(-1),
+    /**
+     * An enum field
+     */
     ENUM(Opcodes.V1_5),
+    /**
+     * A record component
+     */
     RECORD(Opcodes.V14), // Need class formatter
+    /**
+     * A synthetic field
+     */
     SYNTHETIC(-1);
 
     private final int versionStart;
@@ -31,12 +46,21 @@ public enum FieldType {
         this.versionStart = versionStart;
     }
 
+    /**
+     * Get the type by the access flag.
+     * @param accessFlag access flag of the class
+     * @return type of the class
+     */
     public static FieldType getTypeWithAccessFlag(int accessFlag) {
         if ((accessFlag & Opcodes.ACC_SYNTHETIC) != 0)
             return SYNTHETIC;
         return (accessFlag & Opcodes.ACC_ENUM) != 0 ? ENUM : PLAIN;
     }
 
+    /**
+     * Get the version that the type was added to Java
+     * @return a version
+     */
     public int getVersionStart() {
         return versionStart;
     }

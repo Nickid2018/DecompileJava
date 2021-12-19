@@ -16,13 +16,48 @@
 
 package io.github.nickid2018.dejava.api.visitor;
 
+import io.github.nickid2018.dejava.DecompileSettings;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.signature.SignatureVisitor;
 
 /**
  * Visitor for field. The order is:
  * <code>(visitAnnotation)(visitSignature)[visitNoInitialValue|visitInitialValue|visitInitialWithStatement]visitEnd</code>
  */
-public interface FieldEntryVisitor {
+public abstract class FieldEntryVisitor {
+
+    // Access flags using in field declaration
+    public static final int ACC_PUBLIC = Opcodes.ACC_PUBLIC;
+    public static final int ACC_PROTECTED = Opcodes.ACC_PROTECTED;
+    public static final int ACC_PRIVATE = Opcodes.ACC_PRIVATE;
+    public static final int ACC_STATIC = Opcodes.ACC_STATIC;
+    public static final int ACC_FINAL = Opcodes.ACC_FINAL;
+    public static final int ACC_SYNTHETIC = Opcodes.ACC_SYNTHETIC;
+    public static final int ACC_ENUM = Opcodes.ACC_ENUM;
+    public static final int ACC_VOLATILE = Opcodes.ACC_VOLATILE;
+    public static final int ACC_TRANSIENT = Opcodes.ACC_TRANSIENT;
+
+    /**
+     * Visit field declaration.
+     *
+     * @param accessFlag access flag of the field, may be these as follows:
+     *                   <ul>
+     *                      <li>{@link #ACC_PUBLIC} - The field is public.</li>
+     *                      <li>{@link #ACC_PROTECTED} - The field is protected.</li>
+     *                      <li>{@link #ACC_PRIVATE} - The field is private.</li>
+     *                      <li>{@link #ACC_STATIC} - The field is static.</li>
+     *                      <li>{@link #ACC_FINAL} - The field is final.</li>
+     *                      <li>{@link #ACC_SYNTHETIC} - The class is synthetic.
+     *                                   If {@link DecompileSettings#noSynthetic} is true, the method can't receive this. (such as: enum $VALUES)</li>
+     *                      <li>{@link #ACC_ENUM} - The field is an enum field.</li>
+     *                      <li>{@link #ACC_TRANSIENT} - The field is transient.</li>
+     *                      <li>{@link #ACC_VOLATILE} - The field is volatile.</li>
+     *                   </ul>
+     * @param type type of the class (not including type parameters!)
+     * @param name name of the field
+     */
+    public void visitField(int accessFlag, String type, String name) {
+    }
 
     /**
      * Visit when the field has annotations.
@@ -30,36 +65,45 @@ public interface FieldEntryVisitor {
      * @param name the class name of the annotation
      * @return a annotation visitor
      */
-    AnnotationEntryVisitor visitAnnotation(String name);
+    public AnnotationEntryVisitor visitAnnotation(String name) {
+        return null;
+    }
 
     /**
      * Visit when the field have templates.
      *
      * @return a signature information visitor
      */
-    SignatureVisitor visitSignature();
+    public SignatureVisitor visitSignature() {
+        return null;
+    }
 
     /**
      * Visit when the field doesn't have an initial value can be parsed in a line.
      */
-    void visitNoInitialValue();
+    public void visitNoInitialValue() {
+    }
 
     /**
      * Visit when the field have an initial value with a constant.
      *
      * @param initialValue the initial value of the field
      */
-    void visitInitialValue(String initialValue);
+    public void visitInitialValue(String initialValue) {
+    }
 
     /**
      * Visit when the field is assigned with a statement(including lambda).
      *
      * @return a statement visitor
      */
-    StatementEntryVisitor visitInitialWithStatement();
+    public StatementEntryVisitor visitInitialWithStatement() {
+        return null;
+    }
 
     /**
      * Visit when the field has been read.
      */
-    void visitEnd();
+    public void visitEnd() {
+    }
 }

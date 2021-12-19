@@ -16,7 +16,19 @@
 
 package io.github.nickid2018.dejava.api.visitor;
 
+import io.github.nickid2018.dejava.api.ClassType;
+
+/**
+ * A provider for class visitors
+ */
 public interface ClassVisitorProvider {
 
-    ClassEntryVisitor visitClass();
+    /**
+     * Visit a new class.
+     * @param type type of the class
+     * @param file file of the class
+     * @param isInnerClass true if the class is an inner class
+     * @return a visitor to visit class
+     */
+    ClassEntryVisitor visitClass(ClassType type, String file, boolean isInnerClass);
 }

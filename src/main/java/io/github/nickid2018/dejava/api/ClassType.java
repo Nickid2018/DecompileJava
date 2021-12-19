@@ -18,13 +18,34 @@ package io.github.nickid2018.dejava.api;
 
 import org.objectweb.asm.Opcodes;
 
+/**
+ * Types of the class.
+ */
 public enum ClassType {
 
+    /**
+     * A plain class
+     */
     CLASS(-1),
+    /**
+     * An interface
+     */
     INTERFACE(-1),
+    /**
+     * An annotation type
+     */
     ANNOTATION(-1),
+    /**
+     * An enum
+     */
     ENUM(Opcodes.V1_5),
+    /**
+     * A record
+     */
     RECORD(Opcodes.V14),
+    /**
+     * A synthetic class
+     */
     SYNTHETIC(-1);
 
     private final int versionStart;
@@ -33,6 +54,11 @@ public enum ClassType {
         this.versionStart = versionStart;
     }
 
+    /**
+     * Get the type by the access flag.
+     * @param accessFlag access flag of the class
+     * @return type of the class
+     */
     public static ClassType getTypeWithAccessFlag(int accessFlag) {
         if ((accessFlag & Opcodes.ACC_SYNTHETIC) != 0)
             return SYNTHETIC;
@@ -47,6 +73,10 @@ public enum ClassType {
         return CLASS;
     }
 
+    /**
+     * Get the version that the type was added to Java
+     * @return a version
+     */
     public int getVersionStart() {
         return versionStart;
     }

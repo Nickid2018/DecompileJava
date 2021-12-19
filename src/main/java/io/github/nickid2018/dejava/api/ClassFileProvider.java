@@ -20,17 +20,47 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * A provider for classes.
+ */
 public interface ClassFileProvider {
 
+    /**
+     * Warp the byte array into a stream.
+     * @param bytes a byte array
+     * @return a stream contains the data in the array
+     */
     static InputStream warpBytes(byte[] bytes) {
         return new ByteArrayInputStream(bytes);
     }
 
+    /**
+     * Return whether a class is an inner class.
+     * @param name internal name of the class
+     * @return true if the class is an inner class
+     */
     boolean isInnerClass(String name);
 
+    /**
+     * Return whether a class is in the certain package.
+     * @param packageName name of the package
+     * @param binaryName binary name of the class
+     * @return true if the class is in the package
+     */
     boolean isInPackage(String packageName, String binaryName);
 
+    /**
+     * Resolve an internal name into a binary name.
+     * @param internalName internal name of the class
+     * @return binary name of the class
+     */
     String resolveBinaryName(String internalName);
 
+    /**
+     * Get the stream contains the data of the class.
+     * @param internalName internal name of the class
+     * @return a stream contains the class data
+     * @throws IOException occurs in opening/reading the class file
+     */
     InputStream getClassFile(String internalName) throws IOException;
 }

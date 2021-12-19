@@ -1,76 +1,75 @@
 package io.github.nickid2018.dejava.ast;
 
+import io.github.nickid2018.dejava.ConstantNames;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.github.nickid2018.dejava.ConstantNames;
-
 public class TypeArgumentDecl implements INode /*, IModifiable */ {
 
-  public enum TypeArgumentBound {
-    EXTENDS(ConstantNames.EXTENDS), SUPER(ConstantNames.SUPER);
-
-    public final String keyword;
-    TypeArgumentBound(String keyword) {
-      this.keyword = keyword;
+    private String identifier;
+    private TypeArgumentBound bound;
+    private String boundType;
+    public TypeArgumentDecl(String identifier, TypeArgumentBound bound, String boundType) {
+        this.identifier = identifier;
+        this.bound = bound;
+        this.boundType = boundType;
     }
-  }
+    public TypeArgumentDecl(String identifier) {
+        this(identifier, null, null);
+    }
 
-  public static String listToSource(FormatControl fc, List<TypeArgumentDecl> decls) {
-    return new StructuralWriter(fc)
-      .append("<")
-      // stop tokenSep from adding leading space
-      .append(decls.stream().map(e -> e.toSource(fc)).collect(Collectors.joining(", ")))
-      .append(">")
-      .toSource();
-  }
+    public static String listToSource(FormatControl fc, List<TypeArgumentDecl> decls) {
+        return new StructuralWriter(fc)
+                .append("<")
+                // stop tokenSep from adding leading space
+                .append(decls.stream().map(e -> e.toSource(fc)).collect(Collectors.joining(", ")))
+                .append(">")
+                .toSource();
+    }
 
-  private String identifier;
-  private TypeArgumentBound bound;
-  private String boundType;
+    public String getIdentifier() {
+        return identifier;
+    }
 
-  public TypeArgumentDecl(String identifier, TypeArgumentBound bound, String boundType) {
-    this.identifier = identifier;
-    this.bound = bound;
-    this.boundType = boundType;
-  }
+    public TypeArgumentDecl setIdentifier(String identifier) {
+        this.identifier = identifier;
+        return this;
+    }
 
-  public TypeArgumentDecl(String identifier) {
-    this(identifier, null, null);
-  }
+    public TypeArgumentBound getBound() {
+        return bound;
+    }
 
-  public String getIdentifier() {
-    return identifier;
-  }
+    public TypeArgumentDecl setBound(TypeArgumentBound bound) {
+        this.bound = bound;
+        return this;
+    }
 
-  public TypeArgumentDecl setIdentifier(String identifier) {
-    this.identifier = identifier;
-    return this;
-  }
+    public String getBoundType() {
+        return boundType;
+    }
 
-  public TypeArgumentBound getBound() {
-    return bound;
-  }
+    public TypeArgumentDecl setBoundType(String boundType) {
+        this.boundType = boundType;
+        return this;
+    }
 
-  public TypeArgumentDecl setBound(TypeArgumentBound bound) {
-    this.bound = bound;
-    return this;
-  }
+    @Override
+    public String toSource(FormatControl fc) {
+        return new StructuralWriter(fc)
+                .token(identifier)
+                .doIf(boundType, (e, w) -> w.token(bound.keyword, boundType))
+                .toSource();
+    }
 
-  public String getBoundType() {
-    return boundType;
-  }
+    public enum TypeArgumentBound {
+        EXTENDS(ConstantNames.EXTENDS), SUPER(ConstantNames.SUPER);
 
-  public TypeArgumentDecl setBoundType(String boundType) {
-    this.boundType = boundType;
-    return this;
-  }
+        public final String keyword;
 
-  @Override
-  public String toSource(FormatControl fc) {
-    return new StructuralWriter(fc)
-      .token(identifier)
-      .doIf(boundType, (e, w) -> w.token(bound.keyword, boundType))
-      .toSource();
-  }
+        TypeArgumentBound(String keyword) {
+            this.keyword = keyword;
+        }
+    }
 }
