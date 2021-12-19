@@ -7,14 +7,15 @@ import java.util.List;
 
 public class ClassDecl implements INode, IModifiable {
 
-    protected ModifierList modifiers = new ModifierList();
     private final ClassType classType;
-    private String identifier;
     private final List<INode> children = new ArrayList<>();
+    protected ModifierList modifiers = new ModifierList();
+    private String identifier;
     private List<TypeArgumentDecl> typeArguments;
     private List<Typename> classImplements = new ArrayList<>();
     private List<Typename> classPermits = new ArrayList<>();
     private String classExtends;
+
     public ClassDecl(String identifier, ClassType t) {
         this.identifier = identifier;
         this.classType = t;

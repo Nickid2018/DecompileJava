@@ -10,11 +10,13 @@ public class TypeArgumentDecl implements INode /*, IModifiable */ {
     private String identifier;
     private TypeArgumentBound bound;
     private String boundType;
+
     public TypeArgumentDecl(String identifier, TypeArgumentBound bound, String boundType) {
         this.identifier = identifier;
         this.bound = bound;
         this.boundType = boundType;
     }
+
     public TypeArgumentDecl(String identifier) {
         this(identifier, null, null);
     }

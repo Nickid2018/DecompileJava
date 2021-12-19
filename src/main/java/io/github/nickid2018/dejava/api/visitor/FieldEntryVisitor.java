@@ -53,8 +53,8 @@ public abstract class FieldEntryVisitor {
      *                      <li>{@link #ACC_TRANSIENT} - The field is transient.</li>
      *                      <li>{@link #ACC_VOLATILE} - The field is volatile.</li>
      *                   </ul>
-     * @param type type of the class (not including type parameters!)
-     * @param name name of the field
+     * @param type       type of the class (not including type parameters!)
+     * @param name       name of the field
      */
     public void visitField(int accessFlag, String type, String name) {
     }

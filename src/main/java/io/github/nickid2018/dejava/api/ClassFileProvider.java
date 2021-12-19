@@ -27,6 +27,7 @@ public interface ClassFileProvider {
 
     /**
      * Warp the byte array into a stream.
+     *
      * @param bytes a byte array
      * @return a stream contains the data in the array
      */
@@ -36,6 +37,7 @@ public interface ClassFileProvider {
 
     /**
      * Return whether a class is an inner class.
+     *
      * @param name internal name of the class
      * @return true if the class is an inner class
      */
@@ -43,14 +45,16 @@ public interface ClassFileProvider {
 
     /**
      * Return whether a class is in the certain package.
+     *
      * @param packageName name of the package
-     * @param binaryName binary name of the class
+     * @param binaryName  binary name of the class
      * @return true if the class is in the package
      */
     boolean isInPackage(String packageName, String binaryName);
 
     /**
      * Resolve an internal name into a binary name.
+     *
      * @param internalName internal name of the class
      * @return binary name of the class
      */
@@ -58,6 +62,7 @@ public interface ClassFileProvider {
 
     /**
      * Get the stream contains the data of the class.
+     *
      * @param internalName internal name of the class
      * @return a stream contains the class data
      * @throws IOException occurs in opening/reading the class file

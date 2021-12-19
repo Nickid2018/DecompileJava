@@ -24,6 +24,7 @@ public abstract class ImportEntryVisitor {
 
     /**
      * Visit an import entry, using binary names.
+     *
      * @param className binary name of the class
      */
     public void visitImportEntry(String className) {

@@ -8,12 +8,10 @@ import java.util.stream.Collectors;
 
 public class StructuralWriter {
     private final ArrayList<StringBuilder> arr = new ArrayList<>();
-    private int indent = 0;
     private final int indentSpaces = 4;
-
-    private int line = 0;
-
     private final FormatControl format;
+    private int indent = 0;
+    private int line = 0;
 
     public StructuralWriter(FormatControl fc) {
         this(fc, 0);

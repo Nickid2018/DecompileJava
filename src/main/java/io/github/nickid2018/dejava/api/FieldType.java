@@ -48,6 +48,7 @@ public enum FieldType {
 
     /**
      * Get the type by the access flag.
+     *
      * @param accessFlag access flag of the class
      * @return type of the class
      */
@@ -59,6 +60,7 @@ public enum FieldType {
 
     /**
      * Get the version that the type was added to Java
+     *
      * @return a version
      */
     public int getVersionStart() {

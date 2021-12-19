@@ -80,6 +80,7 @@ public abstract class ClassEntryVisitor {
 
     /**
      * Visit the signature of the file.
+     *
      * @return a visitor to read signature
      */
     public SignatureVisitor visitSignature() {

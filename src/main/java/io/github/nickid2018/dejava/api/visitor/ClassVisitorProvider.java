@@ -25,8 +25,9 @@ public interface ClassVisitorProvider {
 
     /**
      * Visit a new class.
-     * @param type type of the class
-     * @param file file of the class
+     *
+     * @param type         type of the class
+     * @param file         file of the class
      * @param isInnerClass true if the class is an inner class
      * @return a visitor to visit class
      */
