@@ -13,7 +13,6 @@ public class ConstantNames {
     public static final String CLASS = "class";
     public static final String INTERFACE = "interface";
     public static final String ENUM = "enum"; // Added in Java 5
-    public static final String RECORD = "record"; // Added in Java 14
     public static final String ANNOTATION = "@interface";
     public static final String IMPORT = "import";
     public static final String STATIC = "static";
@@ -36,9 +35,9 @@ public class ConstantNames {
     public static final String SYNCHRONIZED = "synchronized";
     public static final String ABSTRACT = "abstract";
     public static final String STRICTFP = "strictfp";
-    public static final String NULL = "null";
-    public static final String TRUE = "true";
-    public static final String FALSE = "false";
+    public static final String NULL = "null"; // null literal
+    public static final String TRUE = "true"; // true literal
+    public static final String FALSE = "false"; // false literal
     public static final String THIS = "this";
     public static final String BREAK = "break";
     public static final String CONTINUE = "continue";
@@ -59,19 +58,28 @@ public class ConstantNames {
     public static final String THROWS = "throws";
     public static final String NEW = "new";
     public static final String ASSERT = "assert"; // Added in J2SE 1.4
-    // Reserved words for Java
+    // Reserved keywords for Java
     public static final String GOTO = "goto";
     public static final String CONST = "const";
-    // Keywords for certain conditions
-    public static final String YIELD = "yield"; // Switch
-    public static final String SEALED = "sealed"; // Class Definition
-    public static final String PERMITS = "permits"; // -
-    public static final String MODULE = "module"; // Module
-    public static final String OPENS = "opens"; // -
-    public static final String EXPORTS = "exports"; // -
-    public static final String PROVIDES = "provides"; // -
-    public static final String REQUIRES = "requires"; // -
-    public static final String USES = "uses"; // -
+    public static final String UNDERSCORE = "_";
+    // Contextual keywords
+    public static final String RECORD = "record"; // RecordDeclaration
+    public static final String YIELD = "yield"; // YieldStatement
+    public static final String SEALED = "sealed"; // NormalClassDeclaration
+    public static final String NONSEALED = "non-sealed"; // NormalClassDeclaration
+    public static final String PERMITS = "permits"; // NormalClassDeclaration
+    public static final String VAR = "var"; // LocalVariableType
+    public static final String MODULE = "module"; // ModuleDeclaration
+    public static final String OPEN = "open"; // ModuleDeclaration
+    public static final String OPENS = "opens"; // ModuleDirective
+    public static final String WITH = "with"; // ModuleDirective
+    public static final String USES = "uses"; // ModuleDirective
+    public static final String TO = "to"; // ModuleDirective
+    public static final String EXPORTS = "exports"; // ModuleDirective
+    public static final String PROVIDES = "provides"; // ModuleDirective
+    public static final String REQUIRES = "requires"; // ModuleDirective
+    public static final String TRANSITIVE = "transitive"; // RequiresModifier
+
     // Invalid names for Java
     public static final List<String> KEYWORDS_ALL_RESTRICTED = List.of(
             PUBLIC, PROTECTED, PRIVATE, PACKAGE, CLASS, INTERFACE, ENUM, IMPORT, STATIC, FINAL, VOID, INT, LONG, FLOAT,
