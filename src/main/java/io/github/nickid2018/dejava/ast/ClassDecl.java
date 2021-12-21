@@ -57,10 +57,6 @@ public class ClassDecl implements INode, IModifiable {
         this.identifier = identifier;
     }
 
-    public String getModifiersString() {
-        return this.modifiers.toString();
-    }
-
     public List<Typename> getImplements() {
         return classImplements;
     }
