@@ -1,5 +1,7 @@
 package io.github.nickid2018.dejava.ast;
 
+import io.github.nickid2018.dejava.util.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,14 +19,7 @@ public class ModifierList {
     }
 
     public String toString() {
-        return modifiers
-                .stream()
-                .sorted()
-                .reduce(
-                        "",
-                        (cur, acc) -> cur + acc.toSource() + (acc.isAnnotation() ? "\n" : " "),
-                        (a, b) -> a + b)
-                .stripTrailing();
+        return ModifierUtil.toString(modifiers);
     }
 
 }

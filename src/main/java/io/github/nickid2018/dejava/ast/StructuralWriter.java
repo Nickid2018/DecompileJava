@@ -45,6 +45,7 @@ public class StructuralWriter {
     }
 
     public StructuralWriter append(String s) {
+        if(s == null) return this;
         List<String> t = s.lines().toList();
         arr.get(line).append(t.get(0));
         t.stream().skip(1).forEach(e -> line(e));
