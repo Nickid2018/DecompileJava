@@ -27,6 +27,8 @@ import io.github.nickid2018.dejava.fieldformat.AbstractFieldFormat;
 import io.github.nickid2018.dejava.fieldformat.PlainFieldFormat;
 import org.objectweb.asm.*;
 
+import java.io.IOException;
+
 public class ClassASTParser extends ClassVisitor implements Opcodes {
 
     private final String fileName;
@@ -34,10 +36,15 @@ public class ClassASTParser extends ClassVisitor implements Opcodes {
     private AbstractClassFormat classFormat;
     private boolean isSynthetic;
 
-    public ClassASTParser(int api, String fileName, ClassFileProvider provider) {
+    public ClassASTParser(String fileName, ClassFileProvider provider) {
         super(ASM9);
         this.fileName = fileName;
         fileProvider = provider;
+    }
+
+    public AbstractClassFormat analyze() throws IOException {
+        new ClassReader(fileProvider.getClassFile(fileName)).accept(this, 0);
+        return getClassFormat();
     }
 
     public String getFileName() {
@@ -86,7 +93,7 @@ public class ClassASTParser extends ClassVisitor implements Opcodes {
             case PLAIN -> new PlainFieldFormat(classFormat, name, descriptor, access, value);
             default -> throw new DecompileException("Unknown type! But it is impossible!");
         };
-        format.setSynthetic(isSynthetic);
+        format.setSynthetic(isSynthetic || this.isSynthetic);
         classFormat.addField(name, format);
         return new FieldASTParser(format);
     }

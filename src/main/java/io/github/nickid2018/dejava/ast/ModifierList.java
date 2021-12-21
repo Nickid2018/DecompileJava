@@ -1,6 +1,7 @@
 package io.github.nickid2018.dejava.ast;
 
-import io.github.nickid2018.dejava.util.*;
+import io.github.nickid2018.dejava.api.IModifier;
+import io.github.nickid2018.dejava.util.ModifierUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;

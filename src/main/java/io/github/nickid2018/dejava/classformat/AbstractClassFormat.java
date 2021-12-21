@@ -20,9 +20,12 @@ import io.github.nickid2018.dejava.DecompileException;
 import io.github.nickid2018.dejava.WarnList;
 import io.github.nickid2018.dejava.api.ClassFileProvider;
 import io.github.nickid2018.dejava.api.visitor.ClassEntryVisitor;
+import io.github.nickid2018.dejava.api.visitor.ImportEntryVisitor;
 import io.github.nickid2018.dejava.fieldformat.AbstractFieldFormat;
 import io.github.nickid2018.dejava.methodformat.AbstractMethodFormat;
 import io.github.nickid2018.dejava.util.Checkers;
+import io.github.nickid2018.dejava.util.StringUtils;
+import org.objectweb.asm.signature.SignatureVisitor;
 
 import java.util.*;
 
@@ -35,7 +38,7 @@ public abstract class AbstractClassFormat {
     static {
         List<String> keywords = new ArrayList<>(KEYWORDS_ALL_RESTRICTED);
         keywords.addAll(List.of(
-                RECORD, SEALED, PERMITS
+                RECORD, VAR, SEALED, PERMITS
         ));
         INVALID_CLASS_NAMES = Collections.unmodifiableList(keywords);
     }
@@ -61,24 +64,29 @@ public abstract class AbstractClassFormat {
      * @param accessFlag Access flag for the class
      * @param superClass Super class for the class
      * @param interfaces The implemented classes
+     * @param provider   Provider for classes
+     * @throws DecompileException throws if the name of the class is illegal
      */
-    public AbstractClassFormat(String name, int accessFlag, String superClass, String[] interfaces, ClassFileProvider provider)
+    public AbstractClassFormat(String name, int accessFlag, String superClass, final String[] interfaces, ClassFileProvider provider)
             throws DecompileException {
         this.accessFlag = accessFlag;
+        this.superClass = superClass;
+        this.interfaces = interfaces;
         fileProvider = provider;
         int split = Math.max(-1, name.lastIndexOf('/'));
         className = name.substring(split + 1);
         packageName = split > 0 ? name.substring(0, split).replace('/', '.') : null;
         // --- Verify class name
-        Checkers.checkIfTrue(className.isEmpty(), "Invalid class name: empty");
-        Checkers.checkIfTrue(INVALID_CLASS_NAMES.contains(className),
+        Checkers.errorIfTrue(className.isEmpty(), "Invalid class name: empty");
+        Checkers.errorIfTrue(INVALID_CLASS_NAMES.contains(className),
                 "Invalid class name: %s is a keyword or reserved word", className);
-        Checkers.checkIfFalse(VALID_NAME.matcher(className).matches(),
+        Checkers.errorIfNotMatches(className, VALID_NAME,
                 "Invalid class name: %s has illegal characters", className);
         if (!BEST_NAMING.matcher(className).matches())
             WarnList.warn(className, "%s isn't a good class name: have non-ASCII character", className);
         imports = new ImportClassesSet(packageName);
-        imports.addImport(superClass, provider);
+        if (superClass != null)
+            imports.addImport(superClass, provider);
         for (String clazz : interfaces)
             imports.addImport(clazz, provider);
     }
@@ -114,9 +122,22 @@ public abstract class AbstractClassFormat {
     public void fireVisit(ClassEntryVisitor visitor) {
         if (packageName != null)
             visitor.visitPackage(packageName);
-        if (!imports.isEmpty())
-            imports.fireVisit(visitor.visitImports());
-        if (signature != null)
-            signature.fireVisit(visitor.visitSignature());
+        if (!imports.isEmpty()) {
+            ImportEntryVisitor iev = visitor.visitImports();
+            if (iev != null)
+                imports.fireVisit(iev);
+        }
+        if (signature != null) {
+            SignatureVisitor sv = visitor.visitSignature();
+            if (sv != null)
+                signature.fireVisit(sv);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return StringUtils.fieldsAsString(getClass(),
+                new String[]{"className", "packageName", "accessFlag", "superClass", "interfaces"},
+                className, packageName, accessFlag + "", superClass, Arrays.toString(interfaces));
     }
 }

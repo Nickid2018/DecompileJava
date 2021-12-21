@@ -18,6 +18,7 @@ package io.github.nickid2018.dejava.fieldformat;
 
 import io.github.nickid2018.dejava.DecompileException;
 import io.github.nickid2018.dejava.WarnList;
+import io.github.nickid2018.dejava.api.visitor.FieldEntryVisitor;
 import io.github.nickid2018.dejava.classformat.AbstractClassFormat;
 import io.github.nickid2018.dejava.util.Checkers;
 import org.objectweb.asm.Opcodes;
@@ -39,9 +40,9 @@ public abstract class AbstractFieldFormat {
         this.classFormat = classFormat;
         this.accessFlag = accessFlag;
         this.name = name;
-        Checkers.checkIfTrue(KEYWORDS_ALL_RESTRICTED.contains(name),
+        Checkers.errorIfTrue(KEYWORDS_ALL_RESTRICTED.contains(name),
                 "Invalid field name: %s is a keyword or reserved word", name);
-        Checkers.checkIfFalse(VALID_NAME.matcher(name).matches(),
+        Checkers.errorIfNotMatches(name, VALID_NAME,
                 "Invalid field name: %s has illegal characters", name);
         if (!BEST_NAMING.matcher(name).matches())
             WarnList.warn(classFormat.getClassName(), "%s isn't a good field name: have non-ASCII character", name);
@@ -87,5 +88,9 @@ public abstract class AbstractFieldFormat {
 
     public void setSynthetic(boolean synthetic) {
         isSynthetic = synthetic;
+    }
+
+    public void fireVisit(FieldEntryVisitor visitor) {
+
     }
 }

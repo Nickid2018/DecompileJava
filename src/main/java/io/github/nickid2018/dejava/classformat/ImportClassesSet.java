@@ -19,6 +19,7 @@ package io.github.nickid2018.dejava.classformat;
 import io.github.nickid2018.dejava.api.ClassFileProvider;
 import io.github.nickid2018.dejava.api.visitor.ImportEntryVisitor;
 import io.github.nickid2018.dejava.util.ClassNameUtils;
+import io.github.nickid2018.dejava.util.StringUtils;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -62,5 +63,12 @@ public class ImportClassesSet {
     public void fireVisit(ImportEntryVisitor visitor) {
         names.forEach(visitor::visitImportEntry);
         visitor.visitEnd();
+    }
+
+    @Override
+    public String toString() {
+        return StringUtils.fieldsAsString(getClass(),
+                new String[]{"nowPackage", "names"},
+                nowPackage, names.toString());
     }
 }

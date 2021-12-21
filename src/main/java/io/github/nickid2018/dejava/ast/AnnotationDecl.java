@@ -1,5 +1,7 @@
 package io.github.nickid2018.dejava.ast;
 
+import io.github.nickid2018.dejava.api.IModifier;
+
 public class AnnotationDecl implements IModifier {
 
     private final String name;

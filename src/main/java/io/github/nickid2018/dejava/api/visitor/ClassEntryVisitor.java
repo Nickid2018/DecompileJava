@@ -18,8 +18,15 @@ package io.github.nickid2018.dejava.api.visitor;
 
 import io.github.nickid2018.dejava.DecompileSettings;
 import io.github.nickid2018.dejava.api.FieldType;
+import io.github.nickid2018.dejava.api.IModifier;
+import io.github.nickid2018.dejava.api.Modifiers;
+import io.github.nickid2018.dejava.util.Checkers;
+import io.github.nickid2018.dejava.util.ModifierUtil;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.signature.SignatureVisitor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Visitor for classes. The order is:
@@ -30,13 +37,38 @@ public abstract class ClassEntryVisitor {
     // Access flags using in class declaration
     public static final int ACC_PUBLIC = Opcodes.ACC_PUBLIC;
     public static final int ACC_FINAL = Opcodes.ACC_FINAL;
-    public static final int ACC_SUPER = Opcodes.ACC_SUPER;
+    public static final int ACC_SUPER = Opcodes.ACC_SUPER; // No actual use for decompiling
     public static final int ACC_INTERFACE = Opcodes.ACC_INTERFACE;
     public static final int ACC_ABSTRACT = Opcodes.ACC_ABSTRACT;
     public static final int ACC_SYNTHETIC = Opcodes.ACC_SYNTHETIC;
     public static final int ACC_ANNOTATION = Opcodes.ACC_ANNOTATION;
     public static final int ACC_ENUM = Opcodes.ACC_ENUM;
     public static final int ACC_MODULE = Opcodes.ACC_MODULE;
+    public static final int ACC_RECORD = Opcodes.ACC_RECORD;
+    public static final int ACC_DEPRECATED = Opcodes.ACC_DEPRECATED;
+
+    public static List<IModifier> parseClassEntryAccessFlag(int accessFlag) {
+        List<IModifier> modifiers = new ArrayList<>();
+        boolean isFinal, isAbstract;
+        if (ModifierUtil.checkFlag(accessFlag, ACC_PUBLIC))
+            modifiers.add(Modifiers.PUBLIC);
+        if (isFinal = ModifierUtil.checkFlag(accessFlag, ACC_FINAL))
+            modifiers.add(Modifiers.FINAL);
+        if (isAbstract = ModifierUtil.checkFlag(accessFlag, ACC_ABSTRACT))
+            modifiers.add(Modifiers.ABSTRACT);
+        // --- Check modifiers
+        Checkers.errorIfTrue(isFinal && isAbstract, "A class can't be both final and abstract");
+        Checkers.errorIfTrue(ModifierUtil.checkFlag(accessFlag, ACC_INTERFACE) && !isAbstract,
+                "An interface should be abstract");
+        Checkers.errorIfTrue(ModifierUtil.checkFlag(accessFlag, ACC_ENUM) && !isFinal,
+                "An enum should be final");
+        Checkers.errorIfTrue(ModifierUtil.checkFlag(accessFlag, ACC_RECORD) && !isFinal,
+                "A record should be final");
+        Checkers.errorIfTrue(ModifierUtil.checkFlag(accessFlag, ACC_INTERFACE) &&
+                        !ModifierUtil.checkFlag(accessFlag, ACC_ANNOTATION),
+                "An annotation type should be an interface");
+        return modifiers;
+    }
 
     /**
      * Visit the package name.
@@ -70,6 +102,8 @@ public abstract class ClassEntryVisitor {
      *                      <li>{@link #ACC_ANNOTATION} - The class is an annotation type.</li>
      *                      <li>{@link #ACC_ENUM} - The class is an enum.</li>
      *                      <li>{@link #ACC_MODULE} - The class is a module.</li>
+     *                      <li>{@link #ACC_RECORD} - The class is a record.</li>
+     *                      <li>{@link #ACC_DEPRECATED} - The class is deprecated.</li>
      *                   </ul>
      * @param name       name of the class
      * @param superClass super class of the class, maybe null if the class doesn't need a superclass - such as enums

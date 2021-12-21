@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava;
+package io.github.nickid2018.dejava.util;
 
-public final class AccessFlags {
+public class StringUtils {
 
-
+    public static String fieldsAsString(Class<?> cls, String[] fields, String... args) {
+        String[] pairs = new String[fields.length];
+        for (int i = 0; i < fields.length; i++)
+            pairs[i] = fields[i] + " = " + args[i];
+        return cls.getSimpleName() + "{\n" + String.join(",\n", pairs) + "\n}";
+    }
 }

@@ -1,13 +1,18 @@
 package io.github.nickid2018.dejava.util;
 
-import io.github.nickid2018.dejava.ast.*;
+import io.github.nickid2018.dejava.api.IModifier;
 
-import java.util.*;
+import java.util.List;
 
 public class ModifierUtil {
     private ModifierUtil() {
         throw new IllegalCallerException();
     }
+
+    public static boolean checkFlag(int accessFlag, int flag) {
+        return (accessFlag & flag) != 0;
+    }
+
     public static String toString(List<IModifier> modifiers) {
         return modifiers
                 .stream()

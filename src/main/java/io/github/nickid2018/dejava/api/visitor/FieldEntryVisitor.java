@@ -17,8 +17,15 @@
 package io.github.nickid2018.dejava.api.visitor;
 
 import io.github.nickid2018.dejava.DecompileSettings;
+import io.github.nickid2018.dejava.api.IModifier;
+import io.github.nickid2018.dejava.api.Modifiers;
+import io.github.nickid2018.dejava.util.Checkers;
+import io.github.nickid2018.dejava.util.ModifierUtil;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.signature.SignatureVisitor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Visitor for field. The order is:
@@ -37,6 +44,32 @@ public abstract class FieldEntryVisitor {
     public static final int ACC_VOLATILE = Opcodes.ACC_VOLATILE;
     public static final int ACC_TRANSIENT = Opcodes.ACC_TRANSIENT;
 
+    public static List<IModifier> parseClassEntryAccessFlag(int accessFlag) {
+        List<IModifier> modifiers = new ArrayList<>();
+        if (ModifierUtil.checkFlag(accessFlag, ACC_PUBLIC))
+            modifiers.add(Modifiers.PUBLIC);
+        if (ModifierUtil.checkFlag(accessFlag, ACC_PROTECTED))
+            modifiers.add(Modifiers.PROTECTED);
+        if (ModifierUtil.checkFlag(accessFlag, ACC_PRIVATE))
+            modifiers.add(Modifiers.PRIVATE);
+        Checkers.errorIfTrue(modifiers.size() > 1,
+                "A field must have at most one public/protected/private");
+        boolean isStatic, isFinal, isVolatile;
+        if (isStatic = ModifierUtil.checkFlag(accessFlag, ACC_STATIC))
+            modifiers.add(Modifiers.STATIC);
+        if (isFinal = ModifierUtil.checkFlag(accessFlag, ACC_FINAL))
+            modifiers.add(Modifiers.FINAL);
+        if (isVolatile = ModifierUtil.checkFlag(accessFlag, ACC_VOLATILE))
+            modifiers.add(Modifiers.VOLATILE);
+        if (ModifierUtil.checkFlag(accessFlag, ACC_TRANSIENT))
+            modifiers.add(Modifiers.TRANSIENT);
+        Checkers.errorIfTrue(isFinal && isVolatile, "A field can't be both final and volatile");
+        Checkers.errorIfTrue(ModifierUtil.checkFlag(accessFlag, ACC_ENUM) && !(isStatic && isFinal),
+                "An enum field should be static and final");
+        return modifiers;
+    }
+
+
     /**
      * Visit field declaration.
      *
@@ -53,6 +86,7 @@ public abstract class FieldEntryVisitor {
      *                      <li>{@link #ACC_TRANSIENT} - The field is transient.</li>
      *                      <li>{@link #ACC_VOLATILE} - The field is volatile.</li>
      *                   </ul>
+     *                   If the field is a record component, the access flag is -1.
      * @param type       type of the class (not including type parameters!)
      * @param name       name of the field
      */

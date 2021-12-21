@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.util;
+package io.github.nickid2018.dejava.api;
 
-public record LinePair(int indent, String lineStr) {
+import io.github.nickid2018.dejava.ast.INode;
+
+public interface IModifier extends INode, Comparable<IModifier> {
+    boolean isAnnotation();
+
+    String getName();
 }

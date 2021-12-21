@@ -1,5 +1,6 @@
 package io.github.nickid2018.dejava.ast;
 
+import io.github.nickid2018.dejava.api.Modifiers;
 import io.github.nickid2018.dejava.ast.ClassDecl.ClassType;
 import io.github.nickid2018.dejava.ast.TypeArgumentDecl.TypeArgumentBound;
 import org.junit.jupiter.api.DisplayName;

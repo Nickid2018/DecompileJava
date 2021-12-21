@@ -18,15 +18,25 @@ package io.github.nickid2018.dejava.util;
 
 import io.github.nickid2018.dejava.DecompileException;
 
+import java.util.regex.Pattern;
+
 public class Checkers {
 
-    public static void checkIfTrue(boolean check, String error, Object... args) throws DecompileException {
+    public static void errorIfTrue(boolean check, String error, Object... args) throws DecompileException {
         if (check)
             throw new DecompileException(error, args);
     }
 
-    public static void checkIfFalse(boolean check, String error, Object... args) throws DecompileException {
+    public static void errorIfFalse(boolean check, String error, Object... args) throws DecompileException {
         if (!check)
             throw new DecompileException(error, args);
+    }
+
+    public static void errorIfMatches(String str, Pattern pattern, String error, Object... args) throws DecompileException {
+        errorIfTrue(pattern.matcher(str).matches(), error, args);
+    }
+
+    public static void errorIfNotMatches(String str, Pattern pattern, String error, Object... args) throws DecompileException {
+        errorIfFalse(pattern.matcher(str).matches(), error, args);
     }
 }

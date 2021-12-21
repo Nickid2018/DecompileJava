@@ -1,6 +1,7 @@
 package io.github.nickid2018.dejava.ast;
 
 import io.github.nickid2018.dejava.ConstantNames;
+import io.github.nickid2018.dejava.api.IModifier;
 
 import java.util.ArrayList;
 import java.util.List;
