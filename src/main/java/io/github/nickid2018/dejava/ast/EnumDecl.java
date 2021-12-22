@@ -1,5 +1,7 @@
 package io.github.nickid2018.dejava.ast;
 
+import io.github.nickid2018.dejava.ConstantNames;
+
 public final class EnumDecl extends AbstractClassDecl<EnumDecl> {
     public EnumDecl(String identifier) {
         super(identifier);
@@ -9,7 +11,7 @@ public final class EnumDecl extends AbstractClassDecl<EnumDecl> {
     public String toSource(FormatControl fc) {
         return new StructuralWriter(fc)
                 .append(getModifiersString())
-                .token("enum")
+                .token(ConstantNames.ENUM)
                 .toSource();
     }
 }

@@ -5,7 +5,7 @@ import io.github.nickid2018.dejava.api.*;
 import java.util.*;
 
 public sealed abstract class AbstractClassDecl<T extends AbstractClassDecl<?>> implements INode, IModifiable, ITypeArguments,
-        IPermits, IImplemetns permits ClassDecl, EnumDecl {
+        IPermits, IImplements permits ClassDecl, EnumDecl {
     protected ModifierList modifiers = new ModifierList();
     protected String identifier;
     protected List<TypeArgumentDecl> typeArguments;

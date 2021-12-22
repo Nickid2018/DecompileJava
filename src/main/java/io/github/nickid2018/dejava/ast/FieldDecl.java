@@ -3,15 +3,22 @@ package io.github.nickid2018.dejava.ast;
 import io.github.nickid2018.dejava.api.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class FieldDecl implements INode, IModifiable {
     protected ModifierList modifiers = new ModifierList();
-    private final Typename typename;
-    private final List<VarDecl> varDeclList;
+    private Typename typename;
+    private Map<String, IExpression> declarators;
 
-    public FieldDecl(Typename typename, List<VarDecl> varDeclList) {
+    public FieldDecl(Typename typename, Map<String, IExpression> varDeclList) {
         this.typename = Objects.requireNonNull(typename);
-        this.varDeclList = Objects.requireNonNull(varDeclList);
+        this.declarators = Objects.requireNonNull(varDeclList);
+    }
+
+    public FieldDecl(Typename typename, String initializer, IExpression expr) {
+        this.typename = Objects.requireNonNull(typename);
+        this.declarators = new HashMap<>();
+        this.declarators.put(initializer, expr);
     }
 
     @Override
@@ -29,16 +36,28 @@ public class FieldDecl implements INode, IModifiable {
         return typename;
     }
 
-    public List<VarDecl> getVarDeclList() {
-        return varDeclList;
+    public Map<String, IExpression> getDeclarators() {
+        return declarators;
     }
+
+    public FieldDecl addDeclarator(String identifier, IExpression initializer) {
+        declarators.put(identifier, initializer);
+        return this;
+    }
+
+    private String declToString(FormatControl fc) {
+        return declarators.entrySet().stream()
+            .map(e -> e.getKey() + (e.getValue() != null ? (" = " + e.getValue().toSource(fc)) : ""))
+            .collect(Collectors.joining(", "));
+    }
+
 
     @Override
     public String toSource(FormatControl fc) {
         return new StructuralWriter(fc)
                 .append(getModifiersString())
                 .token(getTypename().toSource(fc))
-                .token(getVarDeclList())
+                .token(declToString(fc))
                 .toSource();
     }
 }
