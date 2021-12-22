@@ -17,9 +17,7 @@
 package io.github.nickid2018.dejava.api.visitor;
 
 import io.github.nickid2018.dejava.DecompileSettings;
-import io.github.nickid2018.dejava.api.FieldType;
-import io.github.nickid2018.dejava.api.IModifier;
-import io.github.nickid2018.dejava.api.Modifiers;
+import io.github.nickid2018.dejava.api.*;
 import io.github.nickid2018.dejava.util.Checkers;
 import io.github.nickid2018.dejava.util.ModifierUtil;
 import org.objectweb.asm.Opcodes;
@@ -128,6 +126,24 @@ public abstract class ClassEntryVisitor {
      * @return a visitor to visit field
      */
     public FieldEntryVisitor visitFieldEntry(FieldType fieldType) {
+        return null;
+    }
+
+    /**
+     * Visit method declaration.
+     *
+     * @param fieldType type of the method
+     * @return a visitor to visit method
+     */
+    public MethodEntryVisitor visitMethodEntry(MethodType fieldType) {
+        return null;
+    }
+
+    /**
+     * Visit an inner class.
+     * @return a class visitor to visit the inner class
+     */
+    public ClassEntryVisitor visitInnerClassEntry(ClassType type){
         return null;
     }
 

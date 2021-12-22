@@ -77,12 +77,12 @@ public class ConstantNames {
     // Reserved keywords for Java
     public static final String GOTO = "goto";
     public static final String CONST = "const";
-    public static final String UNDERSCORE = "_";
+    public static final String UNDERSCORE = "_"; // Can't be an identifier after Java 9
     // Contextual keywords
     public static final String RECORD = "record"; // RecordDeclaration
     public static final String YIELD = "yield"; // YieldStatement
     public static final String SEALED = "sealed"; // NormalClassDeclaration
-    public static final String NONSEALED = "non-sealed"; // NormalClassDeclaration
+    public static final String NON_SEALED = "non-sealed"; // NormalClassDeclaration
     public static final String PERMITS = "permits"; // NormalClassDeclaration
     public static final String VAR = "var"; // LocalVariableType
     public static final String MODULE = "module"; // ModuleDeclaration
@@ -101,7 +101,7 @@ public class ConstantNames {
             PUBLIC, PROTECTED, PRIVATE, PACKAGE, CLASS, INTERFACE, ENUM, IMPORT, STATIC, FINAL, VOID, INT, LONG, FLOAT,
             DOUBLE, BYTE, SHORT, BOOLEAN, CHAR, EXTENDS, IMPLEMENTS, SUPER, TRANSIENT, VOLATILE, NATIVE, SYNCHRONIZED,
             ABSTRACT, STRICTFP, NULL, TRUE, FALSE, THIS, BREAK, CONTINUE, RETURN, DO, WHILE, IF, ELSE, FOR, INSTANCEOF,
-            SWITCH, CASE, DEFAULT, TRY, CATCH, FINALLY, THROW, THROWS, NEW, ASSERT, GOTO, CONST
+            SWITCH, CASE, DEFAULT, TRY, CATCH, FINALLY, THROW, THROWS, NEW, ASSERT, GOTO, CONST, UNDERSCORE
     );
     // Patterns
     public static final Pattern VALID_NAME = Pattern.compile("[^/\\\\()<>]+");

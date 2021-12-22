@@ -127,11 +127,20 @@ public abstract class FieldEntryVisitor {
     }
 
     /**
-     * Visit when the field is assigned with a statement(including lambda).
+     * Visit when the field is assigned with a statement.
      *
      * @return a statement visitor
      */
     public StatementEntryVisitor visitInitialWithStatement() {
+        return null;
+    }
+
+    /**
+     * Visit when the field is assigned with a lambda.
+     *
+     * @return a lambda visitor
+     */
+    public LambdaStatementVisitor visitInitialWithLambda() {
         return null;
     }
 

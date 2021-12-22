@@ -38,7 +38,7 @@ public abstract class AbstractClassFormat {
     static {
         List<String> keywords = new ArrayList<>(KEYWORDS_ALL_RESTRICTED);
         keywords.addAll(List.of(
-                RECORD, VAR, SEALED, PERMITS
+                RECORD, YIELD, SEALED, PERMITS, VAR
         ));
         INVALID_CLASS_NAMES = Collections.unmodifiableList(keywords);
     }
