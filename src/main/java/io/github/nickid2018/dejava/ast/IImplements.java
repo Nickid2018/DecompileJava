@@ -2,8 +2,8 @@ package io.github.nickid2018.dejava.ast;
 
 import java.util.*;
 
-public interface IImplemetns {
+public interface IImplements {
     List<Typename> getImplements();
 
-    IImplemetns setImplements(List<Typename> classImplements);
+    IImplements setImplements(List<Typename> classImplements);
 }
