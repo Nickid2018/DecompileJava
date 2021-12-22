@@ -105,6 +105,11 @@ public class StructuralWriter {
         return this;
     }
 
+    public StructuralWriter doIfTrue(boolean condition, Consumer<StructuralWriter> b) {
+        if (condition) b.accept(this);
+        return this;
+    }
+
     public StructuralWriter doIf(INode s, BiConsumer<INode, StructuralWriter> b) {
         if (s != null) b.accept(s, this);
         return this;
