@@ -1,12 +1,10 @@
 package io.github.nickid2018.dejava.ast;
 
 import io.github.nickid2018.dejava.api.Modifiers;
-import io.github.nickid2018.dejava.ast.ClassDecl.ClassType;
 import io.github.nickid2018.dejava.ast.TypeArgumentDecl.TypeArgumentBound;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import java.util.List;
+import java.util.*;
 
 @DisplayName("AST Generation Test")
 class AstTest {
@@ -17,7 +15,7 @@ class AstTest {
         source
                 .setPackage("io.github.nickid2018.dejava")
                 .setClassDecl(
-                        new ClassDecl("TestClass", ClassType.CLASS)
+                        new ClassDecl("TestClass")
                                 .addModifiers(new AnnotationDecl("Mixin"))
                                 .addModifiers(new AnnotationDecl("Deprecated"))
                                 .addModifiers(Modifiers.PUBLIC, Modifiers.ABSTRACT)
