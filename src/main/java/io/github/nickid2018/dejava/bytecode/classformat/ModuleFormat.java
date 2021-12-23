@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.classformat;
+package io.github.nickid2018.dejava.bytecode.classformat;
 
 import io.github.nickid2018.dejava.ConstantNames;
 import io.github.nickid2018.dejava.DecompileSettings;

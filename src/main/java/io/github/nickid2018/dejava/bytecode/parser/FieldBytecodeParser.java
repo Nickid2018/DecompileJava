@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.bytecode;
+package io.github.nickid2018.dejava.bytecode.parser;
 
-import io.github.nickid2018.dejava.fieldformat.AbstractFieldFormat;
+import io.github.nickid2018.dejava.bytecode.fieldformat.AbstractFieldFormat;
+import org.objectweb.asm.AnnotationVisitor;
+import org.objectweb.asm.Attribute;
 import org.objectweb.asm.FieldVisitor;
+import org.objectweb.asm.TypePath;
 
 import static org.objectweb.asm.Opcodes.ASM9;
 
@@ -34,5 +37,23 @@ public class FieldBytecodeParser extends FieldVisitor {
         return fieldFormat;
     }
 
+    @Override
+    public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
+        return super.visitAnnotation(descriptor, visible);
+    }
 
+    @Override
+    public AnnotationVisitor visitTypeAnnotation(int typeRef, TypePath typePath, String descriptor, boolean visible) {
+        return super.visitTypeAnnotation(typeRef, typePath, descriptor, visible);
+    }
+
+    @Override
+    public void visitAttribute(Attribute attribute) {
+        // Ignore
+    }
+
+    @Override
+    public void visitEnd() {
+        // Ignore
+    }
 }

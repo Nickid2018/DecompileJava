@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.bytecode;
+package io.github.nickid2018.dejava.bytecode.parser;
 
-import io.github.nickid2018.dejava.classformat.ModuleFormat;
+import io.github.nickid2018.dejava.bytecode.classformat.ModuleFormat;
 import org.objectweb.asm.ModuleVisitor;
 import org.objectweb.asm.Opcodes;
 
