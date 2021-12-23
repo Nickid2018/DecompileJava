@@ -1,6 +1,7 @@
 package io.github.nickid2018.dejava.ast;
 
 import io.github.nickid2018.dejava.*;
+import io.github.nickid2018.dejava.api.*;
 
 import java.util.*;
 
@@ -39,10 +40,13 @@ public class ModuleDecl implements INode {
     @Override
     public String toSource(FormatControl fc) {
         return new StructuralWriter(fc)
+                .append(ConstantNames.MODULE+" ")
                 .doIfTrue(open, writer -> writer.token(ConstantNames.OPEN))
                 .token(identifier)
                 .block(writer -> {
-                    writer.token(getModuleDirectives()); // TODO replace to getModuleDirectivesString
+                    for(var md : getModuleDirectives()) {
+                        writer.token(md.toSource(fc)).line();
+                    }
                 })
                 .toSource();
     }

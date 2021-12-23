@@ -2,7 +2,8 @@ package io.github.nickid2018.dejava.util;
 
 import io.github.nickid2018.dejava.api.IModifier;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.*;
 
 public class ModifierUtil {
     private ModifierUtil() {
@@ -13,14 +14,20 @@ public class ModifierUtil {
         return (accessFlag & flag) != 0;
     }
 
-    public static String toString(List<IModifier> modifiers) {
-        return modifiers
-                .stream()
-                .sorted()
+    public static String toString(IModifier... modifiers) {
+        return toString(Arrays.stream(modifiers));
+    }
+
+    public static String toString(Stream<IModifier> modifiers) {
+       return modifiers.sorted()
                 .reduce(
                         "",
                         (cur, acc) -> cur + acc.toSource() + (acc.isAnnotation() ? "\n" : " "),
                         (a, b) -> a + b)
                 .stripTrailing();
+    }
+
+    public static String toString(List<IModifier> modifiers) {
+        return toString(modifiers.stream());
     }
 }

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class StructuralWriter {
     private final ArrayList<StringBuilder> arr = new ArrayList<>();
-    private final int indentSpaces = 4;
+    private final int indentSpaces = 4; // TODO move to FormatControl
     private final FormatControl format;
     private int indent = 0;
     private int line = 0;
@@ -23,6 +23,10 @@ public class StructuralWriter {
         this.indent = indent;
         this.format = fc;
         arr.add(new StringBuilder(" ".repeat(indent * indentSpaces)));
+    }
+
+    public static StructuralWriter newInstance() {
+        return new StructuralWriter(FormatControl.getDefault());
     }
 
     public StructuralWriter token(String... s) {
