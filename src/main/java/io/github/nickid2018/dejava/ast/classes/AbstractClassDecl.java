@@ -1,6 +1,12 @@
-package io.github.nickid2018.dejava.ast;
+package io.github.nickid2018.dejava.ast.classes;
 
 import io.github.nickid2018.dejava.api.*;
+import io.github.nickid2018.dejava.ast.IModifiable;
+import io.github.nickid2018.dejava.ast.INode;
+import io.github.nickid2018.dejava.ast.ITypeArguments;
+import io.github.nickid2018.dejava.ast.ModifierList;
+import io.github.nickid2018.dejava.ast.TypeArgumentDecl;
+import io.github.nickid2018.dejava.ast.Typename;
 
 import java.util.*;
 

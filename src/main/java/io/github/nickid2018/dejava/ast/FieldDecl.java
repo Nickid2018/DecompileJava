@@ -1,6 +1,7 @@
 package io.github.nickid2018.dejava.ast;
 
 import io.github.nickid2018.dejava.api.*;
+import io.github.nickid2018.dejava.ast.expr.IExpression;
 
 import java.util.*;
 import java.util.stream.Collectors;
