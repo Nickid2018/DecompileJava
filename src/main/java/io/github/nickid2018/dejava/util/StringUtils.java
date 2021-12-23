@@ -17,7 +17,9 @@
 package io.github.nickid2018.dejava.util;
 
 public class StringUtils {
-
+    public static boolean isEmpty(String s) {
+        return s == null || s.isEmpty();
+    }
     public static String fieldsAsString(Class<?> cls, String[] fields, String... args) {
         String[] pairs = new String[fields.length];
         for (int i = 0; i < fields.length; i++)
