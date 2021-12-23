@@ -15,11 +15,11 @@ class FieldDeclTest {
             .addModifiers(Modifiers.PUBLIC).toSource();
         assertEquals("public int field0", result);
 
-        var result2 = new FieldDecl(Typename.of("int"), 
-            Map.of("field1", new IExpression(){}, 
+        var result2 = new FieldDecl(Typename.of("int"),
+            Map.of("field1", new IExpression(){},
                    "field2", new IExpression(){}))
             .addModifiers(Modifiers.PUBLIC).toSource();
-        
+
         System.out.println(result);
         System.out.println(result2);
 

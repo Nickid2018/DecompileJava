@@ -1,5 +1,7 @@
 package io.github.nickid2018.dejava.ast;
 
+import io.github.nickid2018.dejava.util.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -45,7 +47,7 @@ public class StructuralWriter {
     }
 
     public StructuralWriter append(String s) {
-        if (s == null) return this;
+        if (StringUtils.isEmpty(s)) return this;
         List<String> t = s.lines().toList();
         arr.get(line).append(t.get(0));
         t.stream().skip(1).forEach(e -> line(e));
