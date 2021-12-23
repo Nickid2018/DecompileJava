@@ -1,6 +1,11 @@
-package io.github.nickid2018.dejava.ast;
+package io.github.nickid2018.dejava.ast.classes;
 
 import io.github.nickid2018.dejava.*;
+import io.github.nickid2018.dejava.ast.FormatControl;
+import io.github.nickid2018.dejava.ast.INode;
+import io.github.nickid2018.dejava.ast.ModifierList;
+import io.github.nickid2018.dejava.ast.StructuralWriter;
+import io.github.nickid2018.dejava.ast.TypeArgumentDecl;
 
 import java.util.*;
 

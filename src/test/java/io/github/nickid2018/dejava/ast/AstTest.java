@@ -2,6 +2,8 @@ package io.github.nickid2018.dejava.ast;
 
 import io.github.nickid2018.dejava.api.Modifiers;
 import io.github.nickid2018.dejava.ast.TypeArgumentDecl.TypeArgumentBound;
+import io.github.nickid2018.dejava.ast.classes.ClassDecl;
+
 import org.junit.jupiter.api.*;
 
 import java.util.*;
@@ -22,12 +24,15 @@ class AstTest {
                                 .addModifiers(Modifiers.SEALED)
                                 .setExtends("ParentClass")
                                 .setImplements(List.of(
-                                        new Typename("Comparable", new TypeArgumentDecl("T")),
+                                        new Typename("Comparable",
+                                                new TypeArgumentDecl(
+                                                        "T")),
                                         Typename.of("INode")))
                                 .setPermits(Typename.ofList("C1", "C2", "C3"))
                                 .setTypeArguments(List.of(
-                                        new TypeArgumentDecl("T", TypeArgumentBound.EXTENDS, "EntityPlayer")))
-                );
+                                        new TypeArgumentDecl("T",
+                                                TypeArgumentBound.EXTENDS,
+                                                "EntityPlayer"))));
 
         System.out.println(source.toSource());
     }

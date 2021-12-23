@@ -1,6 +1,8 @@
-package io.github.nickid2018.dejava.ast;
+package io.github.nickid2018.dejava.ast.classes;
 
 import io.github.nickid2018.dejava.ConstantNames;
+import io.github.nickid2018.dejava.ast.FormatControl;
+import io.github.nickid2018.dejava.ast.StructuralWriter;
 
 public final class EnumDecl extends AbstractClassDecl<EnumDecl> {
     public EnumDecl(String identifier) {

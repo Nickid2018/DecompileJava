@@ -2,6 +2,8 @@ package io.github.nickid2018.dejava.ast;
 
 import org.junit.jupiter.api.*;
 
+import io.github.nickid2018.dejava.ast.classes.EnumConstant;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 

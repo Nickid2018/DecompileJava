@@ -1,6 +1,7 @@
 package io.github.nickid2018.dejava.ast;
 
 import io.github.nickid2018.dejava.ConstantNames;
+import io.github.nickid2018.dejava.ast.classes.ClassDecl;
 
 public class JavaSource implements INode {
 

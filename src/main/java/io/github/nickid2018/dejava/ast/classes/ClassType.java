@@ -1,4 +1,4 @@
-package io.github.nickid2018.dejava.ast;
+package io.github.nickid2018.dejava.ast.classes;
 
 import io.github.nickid2018.dejava.*;
 
