@@ -82,7 +82,7 @@ public abstract class AbstractClassFormat {
                 "Invalid class name: %s is a keyword or reserved word", className);
         Checkers.errorIfNotMatches(className, VALID_NAME,
                 "Invalid class name: %s has illegal characters", className);
-        if (!BEST_NAMING.matcher(className).matches())
+        if (!Checkers.match(name, BEST_NAMING))
             WarnList.warn(className, "%s isn't a good class name: have non-ASCII character", className);
         imports = new ImportClassesSet(packageName);
         if (superClass != null)

@@ -104,7 +104,8 @@ public class ConstantNames {
             SWITCH, CASE, DEFAULT, TRY, CATCH, FINALLY, THROW, THROWS, NEW, ASSERT, GOTO, CONST, UNDERSCORE
     );
     // Patterns
-    public static final Pattern VALID_NAME = Pattern.compile("[^/\\\\()<>]+");
+    public static final Pattern DOT_VALID_NAME = Pattern.compile("[^/\\\\()<>.]+");
+    public static final Pattern VALID_NAME = Pattern.compile("[^/\\\\()<>.]+");
     public static final Pattern BEST_NAMING = Pattern.compile("[a-zA-Z$0-9]+");
     // Bootstrap Methods
     public static final String LAMBDA_BOOTSTRAP_CLASS = "java/lang/invoke/LambdaMetafactory"; // In Java 8

@@ -14,25 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.astparse;
+package io.github.nickid2018.dejava.util;
 
-import io.github.nickid2018.dejava.fieldformat.AbstractFieldFormat;
-import org.objectweb.asm.FieldVisitor;
-
-import static org.objectweb.asm.Opcodes.ASM9;
-
-public class FieldASTParser extends FieldVisitor {
-
-    private final AbstractFieldFormat fieldFormat;
-
-    public FieldASTParser(AbstractFieldFormat fieldFormat) {
-        super(ASM9);
-        this.fieldFormat = fieldFormat;
-    }
-
-    public AbstractFieldFormat getFieldFormat() {
-        return fieldFormat;
-    }
-
-
+public record IntPair<T>(int key, T value) {
 }

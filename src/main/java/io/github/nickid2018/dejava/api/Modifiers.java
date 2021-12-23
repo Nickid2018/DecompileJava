@@ -28,6 +28,7 @@ public final class Modifiers {
     public static final Modifier PRIVATE = new Modifier(ConstantNames.PRIVATE, 0);
     public static final Modifier PROTECTED = new Modifier(ConstantNames.PROTECTED, 0);
     public static final Modifier TRANSITIVE = new Modifier(ConstantNames.TRANSITIVE, 0);
+    public static final Modifier OPEN = new Modifier(ConstantNames.OPEN, 0);
     public static final Modifier DEFAULT = new Modifier(ConstantNames.DEFAULT, 1);
     public static final Modifier ABSTRACT = new Modifier(ConstantNames.ABSTRACT, 1);
     public static final Modifier SEALED = new Modifier(ConstantNames.SEALED, 1);

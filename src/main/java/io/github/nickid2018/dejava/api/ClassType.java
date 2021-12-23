@@ -44,6 +44,10 @@ public enum ClassType {
      */
     RECORD(Opcodes.V14),
     /**
+     * A module
+     */
+    MODULE(Opcodes.V9),
+    /**
      * A synthetic class
      */
     SYNTHETIC(-1);
@@ -71,6 +75,8 @@ public enum ClassType {
             return ENUM;
         if ((accessFlag & Opcodes.ACC_RECORD) != 0)
             return RECORD;
+        if ((accessFlag & Opcodes.ACC_MODULE) != 0)
+            return MODULE;
         return CLASS;
     }
 

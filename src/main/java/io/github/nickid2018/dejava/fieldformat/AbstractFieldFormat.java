@@ -44,7 +44,7 @@ public abstract class AbstractFieldFormat {
                 "Invalid field name: %s is a keyword or reserved word", name);
         Checkers.errorIfNotMatches(name, VALID_NAME,
                 "Invalid field name: %s has illegal characters", name);
-        if (!BEST_NAMING.matcher(name).matches())
+        if (!Checkers.match(name, BEST_NAMING))
             WarnList.warn(classFormat.getClassName(), "%s isn't a good field name: have non-ASCII character", name);
         classFormat.getImports().addImport(descriptor, classFormat.getFileProvider());
         fieldType = descriptor;

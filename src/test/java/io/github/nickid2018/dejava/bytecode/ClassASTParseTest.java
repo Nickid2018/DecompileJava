@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.astparse;
+package io.github.nickid2018.dejava.bytecode;
 
 import io.github.nickid2018.dejava.WarnList;
 import io.github.nickid2018.dejava.api.ClassFileProvider;
@@ -30,7 +30,7 @@ public class ClassASTParseTest {
     @Test
     @DisplayName("Class Parse Test")
     public void testClassParse() throws IOException {
-        ClassASTParser parser = new ClassASTParser("test", new ClassFileProvider() {
+        ClassBytecodeParser parser = new ClassBytecodeParser("test", new ClassFileProvider() {
             @Override
             public boolean isInnerClass(String name) {
                 // Ignore
@@ -50,7 +50,7 @@ public class ClassASTParseTest {
 
             @Override
             public InputStream getClassFile(String internalName) throws IOException {
-                return getClass().getResourceAsStream("/io/github/nickid2018/dejava/astparse/ClassASTParser.class");
+                return getClass().getResourceAsStream("/io/github/nickid2018/dejava/bytecode/ClassASTParser.class");
             }
         });
         System.out.println(parser.analyze());

@@ -32,11 +32,15 @@ public class Checkers {
             throw new DecompileException(error, args);
     }
 
+    public static boolean match(String str, Pattern pattern) {
+        return str != null && pattern.matcher(str).matches();
+    }
+
     public static void errorIfMatches(String str, Pattern pattern, String error, Object... args) throws DecompileException {
-        errorIfTrue(pattern.matcher(str).matches(), error, args);
+        errorIfTrue(match(str, pattern), error, args);
     }
 
     public static void errorIfNotMatches(String str, Pattern pattern, String error, Object... args) throws DecompileException {
-        errorIfFalse(pattern.matcher(str).matches(), error, args);
+        errorIfFalse(match(str, pattern), error, args);
     }
 }

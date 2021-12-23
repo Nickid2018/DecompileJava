@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.astparse;
+package io.github.nickid2018.dejava.bytecode;
 
 import io.github.nickid2018.dejava.DecompileException;
 import io.github.nickid2018.dejava.api.ClassFileProvider;
 import io.github.nickid2018.dejava.api.ClassType;
 import io.github.nickid2018.dejava.api.FieldType;
 import io.github.nickid2018.dejava.classformat.AbstractClassFormat;
+import io.github.nickid2018.dejava.classformat.ModuleFormat;
 import io.github.nickid2018.dejava.classformat.PlainClassFormat;
 import io.github.nickid2018.dejava.classformat.SignatureInfos;
 import io.github.nickid2018.dejava.fieldformat.AbstractFieldFormat;
@@ -29,14 +30,16 @@ import org.objectweb.asm.*;
 
 import java.io.IOException;
 
-public class ClassASTParser extends ClassVisitor implements Opcodes {
+public class ClassBytecodeParser extends ClassVisitor implements Opcodes {
 
     private final String fileName;
     private final ClassFileProvider fileProvider;
     private AbstractClassFormat classFormat;
+    private ModuleFormat moduleFormat;
     private boolean isSynthetic;
+    private boolean isModule;
 
-    public ClassASTParser(String fileName, ClassFileProvider provider) {
+    public ClassBytecodeParser(String fileName, ClassFileProvider provider) {
         super(ASM9);
         this.fileName = fileName;
         fileProvider = provider;
@@ -55,6 +58,10 @@ public class ClassASTParser extends ClassVisitor implements Opcodes {
         return classFormat;
     }
 
+    public ModuleFormat getModuleFormat() {
+        return moduleFormat;
+    }
+
     @Override
     public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
         ClassType type = ClassType.getTypeWithAccessFlag(access);
@@ -62,9 +69,13 @@ public class ClassASTParser extends ClassVisitor implements Opcodes {
             type = ClassType.getTypeWithAccessFlag(access ^ ACC_SYNTHETIC);
         classFormat = switch (type) {
             case CLASS -> new PlainClassFormat(name, access, superName, interfaces, fileProvider);
+            case MODULE -> {
+                isModule = true;
+                yield null;
+            }
             default -> throw new DecompileException("Unknown type! But it is impossible!");
         };
-        if (signature != null && !signature.isEmpty())
+        if (!isModule && signature != null && !signature.isEmpty())
             classFormat.setSignature(new SignatureInfos(signature));
     }
 
@@ -95,7 +106,13 @@ public class ClassASTParser extends ClassVisitor implements Opcodes {
         };
         format.setSynthetic(isSynthetic || this.isSynthetic);
         classFormat.addField(name, format);
-        return new FieldASTParser(format);
+        return new FieldBytecodeParser(format);
+    }
+
+    @Override
+    public ModuleVisitor visitModule(String name, int access, String version) {
+        ModuleFormat format = new ModuleFormat(name, access, fileProvider);
+        return new ModuleBytecodeParser(format);
     }
 
     @Override
