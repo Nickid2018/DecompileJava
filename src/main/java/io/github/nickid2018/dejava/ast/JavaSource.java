@@ -3,7 +3,7 @@ package io.github.nickid2018.dejava.ast;
 import io.github.nickid2018.dejava.ConstantNames;
 
 public class JavaSource implements INode {
-
+    // TODO change clazz to typeDeclList
     private ClassDecl clazz;
     private String packageName;
 
