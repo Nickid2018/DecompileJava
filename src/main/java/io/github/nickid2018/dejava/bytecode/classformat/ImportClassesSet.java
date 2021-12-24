@@ -18,7 +18,7 @@ package io.github.nickid2018.dejava.bytecode.classformat;
 
 import io.github.nickid2018.dejava.api.ClassFileProvider;
 import io.github.nickid2018.dejava.api.visitor.ImportEntryVisitor;
-import io.github.nickid2018.dejava.util.ClassNameUtils;
+import io.github.nickid2018.dejava.util.DescriptorUtils;
 import io.github.nickid2018.dejava.util.StringUtils;
 
 import java.util.Set;
@@ -40,9 +40,9 @@ public class ImportClassesSet {
      */
     public void addImport(String name, ClassFileProvider provider) {
         // Skip head array type, "LXX;".
-        name = ClassNameUtils.getTypeName(name);
+        name = DescriptorUtils.getTypeName(name);
         // Check primitive class
-        if (ClassNameUtils.isPrimitive(name))
+        if (DescriptorUtils.isPrimitive(name))
             return;
         boolean innerClass = false;
         if (name.contains("$"))
