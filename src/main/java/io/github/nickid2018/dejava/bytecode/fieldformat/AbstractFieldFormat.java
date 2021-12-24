@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.fieldformat;
+package io.github.nickid2018.dejava.bytecode.fieldformat;
 
 import io.github.nickid2018.dejava.DecompileException;
 import io.github.nickid2018.dejava.WarnList;
 import io.github.nickid2018.dejava.api.visitor.FieldEntryVisitor;
-import io.github.nickid2018.dejava.classformat.AbstractClassFormat;
+import io.github.nickid2018.dejava.bytecode.classformat.AbstractClassFormat;
 import io.github.nickid2018.dejava.util.Checkers;
 import org.objectweb.asm.Opcodes;
 

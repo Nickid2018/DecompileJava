@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.classformat;
+package io.github.nickid2018.dejava.bytecode.methodformat;
 
-import org.objectweb.asm.signature.SignatureReader;
-import org.objectweb.asm.signature.SignatureVisitor;
+public abstract class AbstractMethodFormat {
 
-public record SignatureInfos(String signature) {
-
-    public void fireVisit(SignatureVisitor visitor) {
-        new SignatureReader(signature).accept(visitor);
-    }
 }

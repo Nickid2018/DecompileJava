@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.fieldformat;
+package io.github.nickid2018.dejava.bytecode.classformat;
 
-import io.github.nickid2018.dejava.DecompileException;
-import io.github.nickid2018.dejava.classformat.AbstractClassFormat;
+import org.objectweb.asm.signature.SignatureReader;
+import org.objectweb.asm.signature.SignatureVisitor;
 
-public class PlainFieldFormat extends AbstractFieldFormat {
+public record SignatureInfos(String signature) {
 
-    public PlainFieldFormat(AbstractClassFormat classFormat, String name, String descriptor, int accessFlag, Object initialValue)
-            throws DecompileException {
-        super(classFormat, name, descriptor, accessFlag, initialValue);
+    public void fireVisit(SignatureVisitor visitor) {
+        new SignatureReader(signature).accept(visitor);
     }
 }

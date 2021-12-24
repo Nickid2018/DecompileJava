@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.bytecode;
+package io.github.nickid2018.dejava.bytecode.parser;
 
 import io.github.nickid2018.dejava.DecompileException;
 import io.github.nickid2018.dejava.api.ClassFileProvider;
 import io.github.nickid2018.dejava.api.ClassType;
 import io.github.nickid2018.dejava.api.FieldType;
-import io.github.nickid2018.dejava.classformat.AbstractClassFormat;
-import io.github.nickid2018.dejava.classformat.ModuleFormat;
-import io.github.nickid2018.dejava.classformat.PlainClassFormat;
-import io.github.nickid2018.dejava.classformat.SignatureInfos;
-import io.github.nickid2018.dejava.fieldformat.AbstractFieldFormat;
-import io.github.nickid2018.dejava.fieldformat.PlainFieldFormat;
+import io.github.nickid2018.dejava.bytecode.classformat.AbstractClassFormat;
+import io.github.nickid2018.dejava.bytecode.classformat.ModuleFormat;
+import io.github.nickid2018.dejava.bytecode.classformat.PlainClassFormat;
+import io.github.nickid2018.dejava.bytecode.classformat.SignatureInfos;
+import io.github.nickid2018.dejava.bytecode.fieldformat.AbstractFieldFormat;
+import io.github.nickid2018.dejava.bytecode.fieldformat.PlainFieldFormat;
 import org.objectweb.asm.*;
 
 import java.io.IOException;

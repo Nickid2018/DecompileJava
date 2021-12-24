@@ -18,6 +18,7 @@ package io.github.nickid2018.dejava.bytecode;
 
 import io.github.nickid2018.dejava.WarnList;
 import io.github.nickid2018.dejava.api.ClassFileProvider;
+import io.github.nickid2018.dejava.bytecode.parser.ClassBytecodeParser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -50,7 +51,7 @@ public class ClassASTParseTest {
 
             @Override
             public InputStream getClassFile(String internalName) throws IOException {
-                return getClass().getResourceAsStream("/io/github/nickid2018/dejava/bytecode/ClassASTParser.class");
+                return getClass().getResourceAsStream("/io/github/nickid2018/dejava/bytecode/ClassBytecodeParser.class");
             }
         });
         System.out.println(parser.analyze());

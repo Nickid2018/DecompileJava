@@ -14,8 +14,15 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.methodformat;
+package io.github.nickid2018.dejava.bytecode.fieldformat;
 
-public abstract class AbstractMethodFormat {
+import io.github.nickid2018.dejava.DecompileException;
+import io.github.nickid2018.dejava.bytecode.classformat.AbstractClassFormat;
 
+public class PlainFieldFormat extends AbstractFieldFormat {
+
+    public PlainFieldFormat(AbstractClassFormat classFormat, String name, String descriptor, int accessFlag, Object initialValue)
+            throws DecompileException {
+        super(classFormat, name, descriptor, accessFlag, initialValue);
+    }
 }

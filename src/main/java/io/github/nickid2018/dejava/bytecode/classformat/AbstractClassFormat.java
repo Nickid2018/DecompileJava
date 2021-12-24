@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.classformat;
+package io.github.nickid2018.dejava.bytecode.classformat;
 
 import io.github.nickid2018.dejava.DecompileException;
 import io.github.nickid2018.dejava.WarnList;
 import io.github.nickid2018.dejava.api.ClassFileProvider;
 import io.github.nickid2018.dejava.api.visitor.ClassEntryVisitor;
 import io.github.nickid2018.dejava.api.visitor.ImportEntryVisitor;
-import io.github.nickid2018.dejava.fieldformat.AbstractFieldFormat;
-import io.github.nickid2018.dejava.methodformat.AbstractMethodFormat;
+import io.github.nickid2018.dejava.bytecode.fieldformat.AbstractFieldFormat;
+import io.github.nickid2018.dejava.bytecode.methodformat.AbstractMethodFormat;
 import io.github.nickid2018.dejava.util.Checkers;
 import io.github.nickid2018.dejava.util.StringUtils;
 import org.objectweb.asm.signature.SignatureVisitor;
