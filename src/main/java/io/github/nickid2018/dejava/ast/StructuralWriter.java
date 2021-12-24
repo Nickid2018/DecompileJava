@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class StructuralWriter {
     private final ArrayList<StringBuilder> arr = new ArrayList<>();
-    private final int indentSpaces = 4;
+    private final int indentSpaces = 4; // TODO move to FormatControl
     private final FormatControl format;
     private int indent = 0;
     private int line = 0;
@@ -25,12 +25,17 @@ public class StructuralWriter {
         arr.add(new StringBuilder(" ".repeat(indent * indentSpaces)));
     }
 
+    public static StructuralWriter newInstance() {
+        return new StructuralWriter(FormatControl.getDefault());
+    }
+
     public StructuralWriter token(String... s) {
         return tokenSep(" ", s);
     }
 
-    public StructuralWriter token(List<? extends INode> s) {
-        return token(s.stream().map(ss -> ss.toSource(format)).toArray(String[]::new));
+    public StructuralWriter token(List<? extends INode> nodes) {
+        if(ListUtils.isEmpty(nodes)) return this;
+        return token(nodes.stream().map(ss -> ss.toSource(format)).toArray(String[]::new));
     }
 
     public StructuralWriter tokenSep(String sep, String... s) {
@@ -68,6 +73,11 @@ public class StructuralWriter {
         return line().token(s).append(";");
     }
 
+    public StructuralWriter token(INode node) {
+        if(node != null) token(node.toSource(format));
+        return this;
+    }
+
     public StructuralWriter enter() {
         indent++;
         line();
@@ -98,12 +108,12 @@ public class StructuralWriter {
     }
 
     public <T> StructuralWriter doIf(List<T> t, BiConsumer<List<T>, StructuralWriter> b) {
-        if (t != null && !t.isEmpty()) b.accept(t, this);
+        if (ListUtils.notEmpty(t)) b.accept(t, this);
         return this;
     }
 
     public StructuralWriter doIf(String s, BiConsumer<String, StructuralWriter> b) {
-        if (s != null && !s.isEmpty()) b.accept(s, this);
+        if (StringUtils.notEmpty(s)) b.accept(s, this);
         return this;
     }
 

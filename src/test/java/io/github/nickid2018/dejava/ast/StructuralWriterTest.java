@@ -24,4 +24,27 @@ public class StructuralWriterTest {
 
         System.out.println(t);
     }
+
+    private void printStart() {
+        System.out.println("----- START -----");
+    }
+
+    private void printEnd() {
+        System.out.println("----- END -----");
+    }
+
+    @Test
+    void testAppend() {
+        printStart();
+        System.out.println(StructuralWriter.newInstance().append("abc").toSource());
+        printEnd();
+        printStart();
+        System.out.println(StructuralWriter.newInstance().append("abc").line().append("def").toSource());
+        printEnd();
+        System.out.println(StructuralWriter.newInstance().append("modifier").token("id").block((wr)->{
+            wr.append("modifier").token("id").block((wr2)->{
+                        wr2.append("code body");
+                    });
+        }).toSource());
+    }
 }

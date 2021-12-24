@@ -2,6 +2,7 @@ package io.github.nickid2018.dejava.ast;
 
 import io.github.nickid2018.dejava.*;
 import io.github.nickid2018.dejava.api.*;
+import io.github.nickid2018.dejava.util.*;
 
 import java.util.*;
 
@@ -24,53 +25,67 @@ public class ModuleDirective implements INode, IModifiable {
         return this;
     }
 
+    public String getFirstModuleName() {
+        return ListUtils.getOrDefault(getModuleNameList(), 0, null);
+    }
+
+    public Typename getFirstTypename() {
+        return ListUtils.getOrDefault(getTypenameList(), 0, null);
+    }
+
     @Override
     public String toSource(FormatControl fc) {
         var wr = new StructuralWriter(fc);
 
-        wr.token(type.toString());
+        wr.append(type.toSource(fc));
         switch (getType()) {
             // {RequiresModifier} ModuleName;
-            case Requires -> wr.token(getModifiersString())
-                    .token(getModuleNameList().isEmpty() ? "" : getModuleNameList().get(0));
+            case Requires -> wr.append(getModifiersString())
+                    .token(getFirstModuleName());
 
             // PackageName [to ModuleName {, ModuleName}];
             case Exports, Opens -> {
                 wr.token(getPackageName())
-                        .doIfTrue(!getModuleNameList().isEmpty(), (writer -> writer.token(ConstantNames.TO)))
-                        .token(getModuleNameList().get(0));
+                        .doIfTrue(ListUtils.notEmpty(getModuleNameList()), (writer -> writer.token(ConstantNames.TO)))
+                        .token(getFirstModuleName());
 
                 for (int i = 1; i < getModuleNameList().size(); i++) {
-                    wr.token(",").token(getModuleNameList().get(i));
+                    wr.append(",").token(getModuleNameList().get(i));
                 }
             }
 
-            // TypeName
+            // TypeName;
             case Uses -> wr.token(getTypename().toSource(fc));
 
             // TypeName with TypeName {, TypeName};
             case Provides -> {
                 wr.token(getTypename().toSource(fc))
-                        .doIfTrue(!getTypenameList().isEmpty(), (writer -> writer.token(ConstantNames.WITH)))
+                        .doIfTrue(ListUtils.notEmpty(getTypenameList()), (writer -> writer.token(ConstantNames.WITH)))
+                        .token(List.of(getFirstTypename()))
                         .token(getTypenameList().get(0).toSource(fc));
 
                 for (int i = 1; i < getTypenameList().size(); i++) {
-                    wr.token(",").token(getTypenameList().get(i).toSource(fc));
+                    wr.append(",").token(getTypenameList().get(i).toSource(fc));
                 }
             }
             default -> throw new IllegalStateException();
         }
-        wr.token(";").line();
+        wr.append(";");
 
         return wr.toSource();
     }
 
-    public enum Type {
+    public enum Type implements INode {
         Requires,
         Exports,
         Opens,
         Uses,
         Provides;
+
+        @Override
+        public String toSource(FormatControl fc) {
+            return this+" ";
+        }
 
         public String toString() {
             return switch (this) {

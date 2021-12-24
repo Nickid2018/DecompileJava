@@ -13,6 +13,7 @@ import java.util.*;
  * TODO Rename to NormalClassDecl
  * */
 public final class ClassDecl extends AbstractClassDecl<ClassDecl> implements IExtends {
+    // TODO Replace to ClassBody
     private final List<INode> children = new ArrayList<>();
     protected ModifierList modifiers = new ModifierList();
     private String classExtends;
