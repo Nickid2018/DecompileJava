@@ -4,9 +4,10 @@ import java.util.*;
 
 public class MethodHeader implements INode, ITypeArguments {
     private List<TypeArgumentDecl> typeArguments = new ArrayList<>();
+    // TODO add missing initializer
     private Typename resultType; // UnannType or void
     private String identifier;
-    // TODO
+    // TODO parList
     private ThrowList throwList = new ThrowList();
 
     public String getIdentifier() {
@@ -28,9 +29,33 @@ public class MethodHeader implements INode, ITypeArguments {
         return this;
     }
 
+    public MethodHeader setThrowList(ThrowList throwList) {
+        this.throwList = throwList;
+        return this;
+    }
+
+    public ThrowList getThrowList() {
+        return throwList;
+    }
+
+    public MethodHeader setResultType(Typename resultType) {
+        this.resultType = resultType;
+        return this;
+    }
+
+    public Typename getResultType() {
+        return resultType;
+    }
 
     @Override
     public String toSource(FormatControl fc) {
-        return null;
+        return new StructuralWriter(fc)
+                .doIf(typeArguments, (s, w) -> w.append(TypeArgumentDecl.listToSource(fc, s)))
+                .token(resultType)
+                .token(identifier)
+                .append("()")
+                .token(throwList)
+                .line()
+                .toSource();
     }
 }

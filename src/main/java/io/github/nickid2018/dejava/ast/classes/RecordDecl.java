@@ -1,4 +1,6 @@
-package io.github.nickid2018.dejava.ast;
+package io.github.nickid2018.dejava.ast.classes;
+
+import io.github.nickid2018.dejava.ast.*;
 
 public final class RecordDecl extends AbstractClassDecl<RecordDecl> {
     private RecordHeader recordHeader; // TODO add missing new
