@@ -3,6 +3,21 @@ package io.github.nickid2018.dejava.ast;
 import io.github.nickid2018.dejava.ConstantNames;
 import io.github.nickid2018.dejava.ast.classes.ClassDecl;
 
+/**
+ * Represent a Java compilation unit (source file).
+ * 
+ * It is the root of the AST and the final target of the output Java file.
+ * 
+ * <pre>
+ * CompilationUnit:
+ *  PackageDeclaration
+ *  ImportDeclaration*
+ *  TopLevelClassOrInterfaceDeclaration
+ * </pre>
+ * 
+ * @see <a href="https://docs.oracle.com/javase/specs/jls/se17/html/jls-7.html#jls-7.3">
+ *  Compilation Units</a>
+ */
 public class JavaSource implements INode {
 
     private ClassDecl clazz;
