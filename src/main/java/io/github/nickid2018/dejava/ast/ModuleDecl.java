@@ -39,15 +39,20 @@ public class ModuleDecl implements INode {
 
     @Override
     public String toSource(FormatControl fc) {
-        return new StructuralWriter(fc)
-                .append(ConstantNames.MODULE+" ")
-                .doIfTrue(open, writer -> writer.token(ConstantNames.OPEN))
-                .token(identifier)
-                .block(writer -> {
+        return new SourceBuilder(fc)
+                .appendIsolationText(ConstantNames.MODULE)
+                .doIfTrue(open, (sb)-> sb.appendIsolationText(ConstantNames.OPEN))
+                .appendIsolationText(identifier)
+                .appendIntervalSpace()
+                .appendText("{")
+                .breakLine()
+                .child(sb1->{
                     for(var md : getModuleDirectives()) {
-                        writer.token(md.toSource(fc)).line();
+                        sb1.appendNode(md).breakLine();
                     }
                 })
-                .toSource();
+                .breakLine()
+                .appendText("}")
+                .build();
     }
 }
