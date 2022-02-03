@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.api.visitor;
+package io.github.nickid2018.dejava.bytecode.statement;
 
-import io.github.nickid2018.dejava.bytecode.statement.constant.ConstantType;
+import io.github.nickid2018.dejava.api.visitor.StatementEntryVisitor;
 
-public abstract class StatementEntryVisitor {
+public abstract class Statement {
 
-    public void visitConstant(Object value, ConstantType type) {
-    }
+    public abstract void fireVisit(StatementEntryVisitor visitor);
 }

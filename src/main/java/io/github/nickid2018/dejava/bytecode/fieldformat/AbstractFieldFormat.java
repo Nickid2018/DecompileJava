@@ -18,21 +18,26 @@ package io.github.nickid2018.dejava.bytecode.fieldformat;
 
 import io.github.nickid2018.dejava.DecompileException;
 import io.github.nickid2018.dejava.WarnList;
+import io.github.nickid2018.dejava.api.FieldType;
 import io.github.nickid2018.dejava.api.visitor.FieldEntryVisitor;
 import io.github.nickid2018.dejava.bytecode.classformat.AbstractClassFormat;
+import io.github.nickid2018.dejava.bytecode.statement.Statement;
+import io.github.nickid2018.dejava.bytecode.statement.constant.Constant;
+import io.github.nickid2018.dejava.bytecode.statement.constant.ConstantType;
 import io.github.nickid2018.dejava.util.Checkers;
+import io.github.nickid2018.dejava.util.ModifierUtil;
 import org.objectweb.asm.Opcodes;
 
 import static io.github.nickid2018.dejava.ConstantNames.*;
 
 public abstract class AbstractFieldFormat {
 
-    private final AbstractClassFormat classFormat;
-    private final String name;
-    private final String fieldType;
-    private final int accessFlag;
-    private String initialValue;
-    private boolean isSynthetic;
+    protected final AbstractClassFormat classFormat;
+    protected final String name;
+    protected final String fieldType;
+    protected final int accessFlag;
+    protected Statement initialValue;
+    protected boolean isSynthetic;
 
     public AbstractFieldFormat(AbstractClassFormat classFormat, String name, String descriptor,
                                int accessFlag, Object initialValue)
@@ -40,6 +45,7 @@ public abstract class AbstractFieldFormat {
         this.classFormat = classFormat;
         this.accessFlag = accessFlag;
         this.name = name;
+        isSynthetic = ModifierUtil.checkFlag(accessFlag, Opcodes.ACC_SYNTHETIC);
         Checkers.errorIfTrue(KEYWORDS_ALL_RESTRICTED.contains(name),
                 "Invalid field name: %s is a keyword or reserved word", name);
         Checkers.errorIfNotMatches(name, VALID_NAME,
@@ -48,16 +54,22 @@ public abstract class AbstractFieldFormat {
             WarnList.warn(classFormat.getClassName(), "%s isn't a good field name: have non-ASCII character", name);
         classFormat.getImports().addImport(descriptor, classFormat.getFileProvider());
         fieldType = descriptor;
-        if ((accessFlag & Opcodes.ACC_STATIC) != 0 && initialValue != null) {
-            // Static field should have an initial value (maybe null, but we ignore it)
-            // The value should be Integer, Float, Long, Double or String
+        if (ModifierUtil.checkFlag(accessFlag, Opcodes.ACC_STATIC)) {
+            // Static field should have an initial value
+            // The value should be null, Integer, Float, Long, Double or String
             this.initialValue = switch (initialValue) {
-                case Integer i -> i + "";
-                case Float f -> f + "f";
-                case Long l -> l + "l";
-                case Double d -> d + "";
-                case String s -> "\"" + s + "\"";
-                default -> throw new DecompileException("Impossible error");
+                case null -> Constant.NULL;
+                case String str -> new Constant<>(str, ConstantType.STRING);
+                case Double d -> new Constant<>(d, ConstantType.DOUBLE);
+                case Long l -> new Constant<>(l, ConstantType.LONG);
+                case Float f -> new Constant<>(f, ConstantType.FLOAT);
+                case Integer i -> {
+                    if (descriptor.equals("Z"))
+                        yield new Constant<>(i != 0, ConstantType.BOOLEAN);
+                    else
+                        yield new Constant<>(i, ConstantType.INT);
+                }
+                default -> throw new DecompileException("Unexpected field value: " + initialValue);
             };
         }
     }
@@ -78,7 +90,7 @@ public abstract class AbstractFieldFormat {
         return classFormat;
     }
 
-    public String getInitialValue() {
+    public Statement getInitialValue() {
         return initialValue;
     }
 
@@ -90,7 +102,7 @@ public abstract class AbstractFieldFormat {
         isSynthetic = synthetic;
     }
 
-    public void fireVisit(FieldEntryVisitor visitor) {
+    public abstract void fireVisit(FieldEntryVisitor visitor);
 
-    }
+    public abstract FieldType getType();
 }

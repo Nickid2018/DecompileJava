@@ -17,9 +17,11 @@
 package io.github.nickid2018.dejava.bytecode.classformat;
 
 import io.github.nickid2018.dejava.DecompileException;
+import io.github.nickid2018.dejava.DecompileSettings;
 import io.github.nickid2018.dejava.WarnList;
 import io.github.nickid2018.dejava.api.ClassFileProvider;
 import io.github.nickid2018.dejava.api.visitor.ClassEntryVisitor;
+import io.github.nickid2018.dejava.api.visitor.FieldEntryVisitor;
 import io.github.nickid2018.dejava.api.visitor.ImportEntryVisitor;
 import io.github.nickid2018.dejava.bytecode.fieldformat.AbstractFieldFormat;
 import io.github.nickid2018.dejava.bytecode.methodformat.AbstractMethodFormat;
@@ -119,7 +121,7 @@ public abstract class AbstractClassFormat {
         fieldFormats.put(name, format);
     }
 
-    public void fireVisit(ClassEntryVisitor visitor) {
+    protected void fireVisitFileHead(ClassEntryVisitor visitor) {
         if (packageName != null)
             visitor.visitPackage(packageName);
         if (!imports.isEmpty()) {
@@ -133,6 +135,23 @@ public abstract class AbstractClassFormat {
                 signature.fireVisit(sv);
         }
     }
+
+    protected void fireVisitFields(ClassEntryVisitor visitor) {
+        for (AbstractFieldFormat field : fieldFormats.values()) {
+            if (field.isSynthetic() && DecompileSettings.noSynthetic)
+                continue;
+            FieldEntryVisitor fev = visitor.visitFieldEntry(field.getType());
+            field.fireVisit(fev);
+        }
+    }
+
+    protected void fireVisitMethods(ClassEntryVisitor visitor) {
+        for (AbstractMethodFormat method : methodFormats.values()) {
+
+        }
+    }
+
+    public abstract void fireVisit(ClassEntryVisitor visitor);
 
     @Override
     public String toString() {

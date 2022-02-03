@@ -51,7 +51,7 @@ public class ClassASTParseTest {
 
             @Override
             public InputStream getClassFile(String internalName) throws IOException {
-                return getClass().getResourceAsStream("/io/github/nickid2018/dejava/bytecode/ClassBytecodeParser.class");
+                return getClass().getResourceAsStream("/io/github/nickid2018/dejava/bytecode/parser/ClassBytecodeParser.class");
             }
         });
         System.out.println(parser.analyze());

@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package io.github.nickid2018.dejava.api.visitor;
+package io.github.nickid2018.dejava.bytecode.statement;
 
-import io.github.nickid2018.dejava.bytecode.statement.constant.ConstantType;
+public class SymbolTable {
 
-public abstract class StatementEntryVisitor {
+    // pair<int, StatementBlock> -> String Identifier Table
+    //                           -> Type Table
+    //                           -> Signature Table
 
-    public void visitConstant(Object value, ConstantType type) {
+    private static record IdentifierEntry(String id, String type, String signature) {
     }
 }

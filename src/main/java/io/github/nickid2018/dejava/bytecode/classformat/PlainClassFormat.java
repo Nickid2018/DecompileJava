@@ -18,6 +18,7 @@ package io.github.nickid2018.dejava.bytecode.classformat;
 
 import io.github.nickid2018.dejava.DecompileException;
 import io.github.nickid2018.dejava.api.ClassFileProvider;
+import io.github.nickid2018.dejava.api.visitor.ClassEntryVisitor;
 
 public class PlainClassFormat extends AbstractClassFormat {
 
@@ -33,4 +34,13 @@ public class PlainClassFormat extends AbstractClassFormat {
             throws DecompileException {
         super(name, accessFlag, superClass, interfaces, provider);
     }
+
+    @Override
+    public void fireVisit(ClassEntryVisitor visitor) {
+        fireVisitFileHead(visitor);
+        fireVisitFields(visitor);
+        fireVisitMethods(visitor);
+        visitor.visitEnd();
+    }
+
 }

@@ -136,4 +136,7 @@ public class ConstantNames {
     public static final String OBJECT_BOOTSTRAP_DESC = "(Ljava/lang/invoke/MethodHandles$Lookup;" +
             "Ljava/lang/String;Ljava/lang/invoke/TypeDescriptor;Ljava/lang/Class;" +
             "Ljava/lang/String;[Ljava/lang/invoke/MethodHandle;)Ljava/lang/invoke/CallSite;";
+    // Packages & Modules
+    public static final String PACKAGE_JAVA_LANG = "java.lang";
+    public static final String MODULE_JAVA_BASE = "java.base";
 }

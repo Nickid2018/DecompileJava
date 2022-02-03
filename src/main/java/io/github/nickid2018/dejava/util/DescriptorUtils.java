@@ -22,10 +22,7 @@ import io.github.nickid2018.dejava.ast.Typename;
 public class DescriptorUtils {
 
     public static boolean isPrimitive(String typeName) {
-        return switch(typeName) {
-            case "B", "C", "D", "F", "I", "J", "S", "Z", "V" -> true;
-            default -> false;
-        };
+        return DescriptorType.nameOf(typeName) != null;
     }
 
     public static String getTypeName(String qualifiedName) {
@@ -34,7 +31,7 @@ public class DescriptorUtils {
                 qualifiedName.substring(1, qualifiedName.length() - 1) : qualifiedName;
     }
 
-    public static enum DescriptorType {
+    public enum DescriptorType {
         B(ConstantNames.BYTE), 
         C(ConstantNames.CHAR), 
         D(ConstantNames.DOUBLE), 
@@ -42,7 +39,8 @@ public class DescriptorUtils {
         I(ConstantNames.INT),
         J(ConstantNames.LONG),
         S(ConstantNames.SHORT),
-        Z(ConstantNames.BOOLEAN);
+        Z(ConstantNames.BOOLEAN),
+        V(ConstantNames.VOID);
 
         public final String type;
         DescriptorType(String type) {
@@ -50,10 +48,18 @@ public class DescriptorUtils {
         }
 
         public static String keyOf(String s) {
-            for (DescriptorType t : values()) {
-                if (t.type.equals(s)) return t.name();
-            }
+            for (DescriptorType t : values())
+                if (t.type.equals(s))
+                    return t.name();
             return null;
+        }
+
+        public static DescriptorType nameOf(String name) {
+            try {
+                return DescriptorType.valueOf(name);
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
         }
     }
     
@@ -89,12 +95,12 @@ public class DescriptorUtils {
                 sb.append(";");
 
                 // TODO make typename full qualified name aware
-                var tn = getTypeName(sb.toString()).split("/");
-                var name = tn[tn.length - 1];
+                String[] tn = getTypeName(sb.toString()).split("/");
+                String name = tn[tn.length - 1];
                 return new Typename(name).setArrayDim(dims);
             }
 
-            var desc = DescriptorType.valueOf(Character.toString(c));
+            DescriptorType desc = DescriptorType.valueOf(Character.toString(c));
             if (desc != null) {
                 return new Typename(desc.type).setArrayDim(dims);
             }

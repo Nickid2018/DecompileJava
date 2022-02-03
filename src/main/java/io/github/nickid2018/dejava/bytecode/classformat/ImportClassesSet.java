@@ -16,6 +16,7 @@
 
 package io.github.nickid2018.dejava.bytecode.classformat;
 
+import io.github.nickid2018.dejava.ConstantNames;
 import io.github.nickid2018.dejava.api.ClassFileProvider;
 import io.github.nickid2018.dejava.api.visitor.ImportEntryVisitor;
 import io.github.nickid2018.dejava.util.DescriptorUtils;
@@ -49,7 +50,7 @@ public class ImportClassesSet {
             // Inner Class?
             innerClass = provider.isInnerClass(name);
         name = provider.resolveBinaryName(name);
-        if (name.startsWith("java.lang") && !innerClass)
+        if (name.startsWith(ConstantNames.PACKAGE_JAVA_LANG) && !innerClass)
             return;
         if (provider.isInPackage(nowPackage, name) && !innerClass)
             return;

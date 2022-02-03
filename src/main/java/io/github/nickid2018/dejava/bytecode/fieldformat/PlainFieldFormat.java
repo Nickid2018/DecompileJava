@@ -17,12 +17,32 @@
 package io.github.nickid2018.dejava.bytecode.fieldformat;
 
 import io.github.nickid2018.dejava.DecompileException;
+import io.github.nickid2018.dejava.api.FieldType;
+import io.github.nickid2018.dejava.api.visitor.FieldEntryVisitor;
 import io.github.nickid2018.dejava.bytecode.classformat.AbstractClassFormat;
+import io.github.nickid2018.dejava.bytecode.statement.constant.Constant;
 
 public class PlainFieldFormat extends AbstractFieldFormat {
 
     public PlainFieldFormat(AbstractClassFormat classFormat, String name, String descriptor, int accessFlag, Object initialValue)
             throws DecompileException {
         super(classFormat, name, descriptor, accessFlag, initialValue);
+    }
+
+    @Override
+    public void fireVisit(FieldEntryVisitor visitor) {
+        visitor.visitField(accessFlag, fieldType, name);
+        if (initialValue == null)
+            visitor.visitNoInitialValue();
+        else {
+            if (initialValue instanceof Constant<?> constant)
+                visitor.visitInitialValue(constant);
+        }
+        visitor.visitEnd();
+    }
+
+    @Override
+    public FieldType getType() {
+        return FieldType.PLAIN;
     }
 }

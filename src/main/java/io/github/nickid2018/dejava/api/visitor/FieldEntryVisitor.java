@@ -19,6 +19,7 @@ package io.github.nickid2018.dejava.api.visitor;
 import io.github.nickid2018.dejava.DecompileSettings;
 import io.github.nickid2018.dejava.api.IModifier;
 import io.github.nickid2018.dejava.api.Modifiers;
+import io.github.nickid2018.dejava.bytecode.statement.constant.Constant;
 import io.github.nickid2018.dejava.util.Checkers;
 import io.github.nickid2018.dejava.util.ModifierUtil;
 import org.objectweb.asm.Opcodes;
@@ -123,7 +124,7 @@ public abstract class FieldEntryVisitor {
      *
      * @param initialValue the initial value of the field
      */
-    public void visitInitialValue(String initialValue) {
+    public void visitInitialValue(Constant<?> initialValue) {
     }
 
     /**
