@@ -16,5 +16,22 @@
 
 package io.github.nickid2018.dejava.util;
 
-public record IntPair<T>(int key, T value) {
+/**
+ * Pair with int and object.
+ * @param <T> object type
+ * @param key key of the pair
+ * @param value value of the pair
+ */
+public record IntPair<T>(int key, T value) implements Comparable<IntPair<T>> {
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public int compareTo(IntPair<T> pair) {
+        if (key != pair.key)
+            return key > pair.key ? 1 : -1;
+        if (pair.value instanceof Comparable comparable)
+            if (value instanceof Comparable thisValue)
+                return thisValue.compareTo(comparable);
+        return System.identityHashCode(value) - System.identityHashCode(pair.value);
+    }
 }

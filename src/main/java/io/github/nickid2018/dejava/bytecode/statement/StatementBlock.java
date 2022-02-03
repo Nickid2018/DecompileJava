@@ -20,7 +20,10 @@ import io.github.nickid2018.dejava.util.Checkers;
 
 import java.util.Arrays;
 
-public abstract class StatementBlock extends Statement {
+/**
+ * A block of statements.
+ */
+public abstract class StatementBlock extends Statement implements Comparable<StatementBlock> {
 
     // Limit BLOCK DEPTH MUST BE LOWER THAN 256
     // AND BLOCK COUNT MUST BE LOWER THAN 32767
@@ -29,13 +32,13 @@ public abstract class StatementBlock extends Statement {
     private final short[] statementBlock = new short[256];
 
     /**
-     * Create statement block with ZERO DEPTH
+     * Create statement block with ZERO DEPTH.
      */
     public StatementBlock() {
     }
 
     /**
-     * Create statement block with a parent block and an index
+     * Create statement block with a parent block and an index.
      * @param blockParent parent of the block
      * @param index index of the block
      */
@@ -47,6 +50,10 @@ public abstract class StatementBlock extends Statement {
         statementBlock[supDepth] = index;
     }
 
+    /**
+     * Get the depth of statement block.
+     * @return depth of statement block
+     */
     public int getDepth() {
         int count = 0;
         for(;;count++)
@@ -55,8 +62,26 @@ public abstract class StatementBlock extends Statement {
         return count;
     }
 
+    /**
+     * Return whether this is the child of other block. A block is a child of its own.
+     * @param block other block needs checking
+     * @return true if the block is the child of other
+     */
     public boolean isChildOf(StatementBlock block) {
         int head = block.getDepth();
         return Arrays.equals(statementBlock, 0, head, block.statementBlock, 0, head);
+    }
+
+    @Override
+    public int compareTo(StatementBlock o) {
+        for (int i = 0; i < 256; i++) {
+            int thisValue = statementBlock[i];
+            int thatValue = o.statementBlock[i];
+            if (thisValue == 0 && thatValue == 0)
+                return 0;
+            if (thisValue != thatValue)
+                return thisValue - thatValue;
+        }
+        return 0;
     }
 }

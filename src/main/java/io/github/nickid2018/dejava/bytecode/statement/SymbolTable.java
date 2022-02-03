@@ -16,6 +16,10 @@
 
 package io.github.nickid2018.dejava.bytecode.statement;
 
+import io.github.nickid2018.dejava.util.IntPair;
+
+import java.util.Map;
+
 public class SymbolTable {
 
     // pair<int, StatementBlock> -> String Identifier Table
@@ -24,4 +28,8 @@ public class SymbolTable {
 
     private static record IdentifierEntry(String id, String type, String signature) {
     }
+
+    private Map<IntPair<StatementBlock>, IdentifierEntry> symbolTable;
+
+
 }
